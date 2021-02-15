@@ -10,7 +10,7 @@ OBJCPY = objcopy
 
 DEFINES = -Iincludes/
 
-EMU = qemu-system-x86_64 -serial file:serial.log
+EMU = qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off -serial chardev:char0 -mon chardev=char0
 
 OBJS = boot/setup.o boot/start.o boot/memory.o
 OBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o

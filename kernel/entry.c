@@ -4,8 +4,9 @@
 void k_entry(void)
 {
     logger_init();
+    klog(INFO, "Booted successfully !");
 
-    *((int *) 0xB8000) = 0x07690748;
+    
 
-    for(;;);
+    while (true);
 }

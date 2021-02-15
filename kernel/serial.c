@@ -14,11 +14,11 @@ bool serial_init(uint16_t serial)
 
     // Check if serial is faulty.
     if (io_inb(serial + 0) != 0xAE)
-        return FALSE;
+        return false;
 
     // If not, set it in normal operation mode. (not-loopback with IRQs enabled and OUT#1 and OUT#2 bits enabled).
     io_outb(serial + 4, 0x0F);
-    return TRUE;
+    return true;
 }
 
 bool serial_received(uint16_t serial)
