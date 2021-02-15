@@ -1,33 +1,41 @@
-CC = gcc
-CFLAGS = -ansi -c
+CC = gcc -m32
+CPPFLAGS = -nostdinc -P
+ASFLAGS = -Wa,--gstabs
 
-AS = as
-LD = ld
+LD = ld -melf_i386
 
-EMU = qemu-system-x86_64 -boot a -no-fd-bootchk
+OBJCPY = objcopy
 
-SOURCE = src
+DEFINES = -Iincludes/
 
-OBJS = boot.bin
+EMU = qemu-system-x86_64
 
-all: clean boot.img
+OBJS = boot/setup.o boot/start.o boot/memory.o
+OBJS += kernel/kernel_entry.o
+
+all: clean os.bin
 
 run: all
-	$(EMU) -fda boot.img
-
-boot.img::
-	dd if=/dev/zero of=$@ bs=512 count=2880
-
-boot.img:: $(OBJS)
-	dd if=$< of=$@ bs=512 count=1 conv=notrunc
-
-boot.bin:
-	$(MAKE) -C $(SOURCE)/boot/ all;
-	mv $(SOURCE)/boot/$@ $@
+	$(EMU) -fda os.bin
 
 clean:
-	$(MAKE) -C $(SOURCE)/boot/ clean;
-	rm -rf *.img *.out *.bin
+	$(MAKE) -C boot/ clean;
+	$(MAKE) -C kernel/ clean;
+	rm -rf *.out *.bin *.ld *.o
 
-%.o: %.S
-	$(AS) -o $@ $<
+os.bin: boot.bin kernel.bin
+	cat $^ > $@
+
+boot.bin:
+	$(MAKE) -C boot/ all;
+	$(MAKE) -C kernel/ all;
+	mv boot/$@ $@
+
+kernel.ld: kernel.ld.S
+	$(CC) -E $(ASFLAGS) $(CPPFLAGS) $(DEFINES) -c $< -o $@
+
+kernel.o: kernel.ld $(OBJS)
+	$(LD) -T $< -o $@ $(OBJS)
+
+kernel.bin: kernel.o
+	$(OBJCPY) -R .note -R .comment -S $< $@
