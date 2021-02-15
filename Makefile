@@ -23,7 +23,7 @@ run: all
 clean:
 	$(MAKE) -C boot/ clean;
 	$(MAKE) -C kernel/ clean;
-	rm -rf *.out *.bin *.ld *.o *.log
+	rm -rf *.bin *.ld *.o *.log
 
 os.bin: boot.bin kernel.bin
 	cat $^ > $@
