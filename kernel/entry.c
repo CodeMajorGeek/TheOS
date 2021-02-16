@@ -1,9 +1,9 @@
 
 #include <kernel/logger.h>
 #include <kernel/tty.h>
+#include <kernel/memory.h>
 
 #include <stdbool.h>
-#include <stdlib.h>
 #include <stdio.h>
 
 void k_entry(void)
@@ -13,10 +13,6 @@ void k_entry(void)
     klog(DEBUG, "Initializing hardware !\r\n");
     tty_init();
     klog(INFO, "Hardware initialized !\r\n");
-
-    printf("salut %H !", 12);
-
-    abort();
 
     while (true);
 }

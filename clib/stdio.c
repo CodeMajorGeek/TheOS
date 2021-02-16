@@ -88,7 +88,7 @@ int printf(const char* restrict format, ...)
             format++;
             int v = va_arg(parameters, int);
 
-            char digits[11]; // max digits size in int decimal.
+            char digits[12]; // max digits size in int decimal.
             itoa(v, digits, sizeof(digits), DECIMAL);
             
             size_t len = strlen(digits);
@@ -125,7 +125,7 @@ int printf(const char* restrict format, ...)
             format++;
             int v = va_arg(parameters, bool);
             
-            char digits[6]; // max digits size in int hexadecimal.
+            char digits[7]; // max digits size in int hexadecimal.
             itoa(v, digits, sizeof(digits), HEXADECIMAL);
 
             size_t len = strlen(digits);
@@ -184,7 +184,7 @@ char* itoa(int value, char* buf, size_t length, unsigned int base)
         else
         {
             int digit = v % base;
-            if (digit < 9)
+            if (digit <= 9)
                 digits[index++] = '0' + digit;
             else
                 digits[index++] = 'a' + (digit - 10);

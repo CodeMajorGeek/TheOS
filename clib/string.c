@@ -38,9 +38,17 @@ void* memmove(void* dstptr, const void* srcptr, size_t size)
 
 void* memset(void* bufptr, int value, size_t size)
 {
-    unsigned char* buf = (unsigned char*) bufptr;
+    uint8_t* buf = (uint8_t*) bufptr;
     for (size_t i = 0; i < size; i++)
-        buf[i] = (unsigned char) value;
+        buf[i] = (uint8_t) value;
+    return bufptr;
+}
+
+void* memsetw(void* bufptr, int value, size_t size)
+{
+    uint16_t* buf = (uint16_t*) bufptr;
+    for (size_t i = 0; i < size; i++)
+        buf[i] = (uint16_t) value;
     return bufptr;
 }
 

@@ -11,16 +11,9 @@ static uint16_t* tty_buffer;
 
 void tty_init(void)
 {
-    tty_row = 0;
-    tty_col = 0;
     tty_color = vga_entry_color(VGA_LIGHT_GREY, VGA_BLACK);
     tty_buffer = VGA_MEMORY;
-    for (size_t y = 0; y < VGA_HEIGHT; y++)
-        for (size_t x = 0; x < VGA_WIDTH; x++)
-        {
-            const size_t index = y * VGA_WIDTH + x;
-            tty_buffer[index] = vga_entry(' ', tty_color);
-        }
+    tty_clear();
 }
 
 void tty_set_color(uint8_t color)
@@ -55,4 +48,11 @@ void tty_write(const char* data, size_t size)
 void tty_puts(const char* s)
 {
     tty_write(s, strlen(s));
+}
+
+void tty_clear(void)
+{
+    tty_col = 0;
+    tty_row = 0;
+    memsetw(tty_buffer, vga_entry(' ', tty_color), VGA_WIDTH * VGA_HEIGHT);
 }

@@ -11,6 +11,7 @@ TheOS is an OS written by me.
 ## Ingoing things:
 - **Clib coding.**
 - **Kernel coding.**
+- **Memory managment**
 
 ## Check list:
 - **Kernel loader in x86 protected mode.**
