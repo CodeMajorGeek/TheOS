@@ -1,0 +1,23 @@
+{
+    "env": {
+        "includePaths":[
+            "${workspaceFolder}/includes/",
+            "${workspaceFolder}/includes/clib/"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "TheOS",
+            "intelliSenseMode": "gcc-x86",
+            "includePath": [ "${includePaths}" ],
+            "cStandard": "c11",
+            "browse": {
+                "path": ["${workspaceFolder}"],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+
+        }
+    ],
+    "version": 4
+}

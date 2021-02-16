@@ -14,7 +14,7 @@ void k_entry(void)
     tty_init();
     klog(INFO, "Hardware initialized !\r\n");
 
-    printf("salut %s !", "toi");
+    printf("salut %H !", 12);
 
     abort();
 

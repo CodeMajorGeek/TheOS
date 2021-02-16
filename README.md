@@ -6,7 +6,7 @@ TheOS is an OS written by me.
 - **Add storage support.**
 - **Add multiprocessing support.**
 - **Add User space.**
-- **Have a good Clib for future user space.**
+- **Have a good Clib implementation for future user space.**
 
 ## Ingoing things:
 - **Clib coding.**
