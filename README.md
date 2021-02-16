@@ -5,7 +5,7 @@ TheOS is an OS written by me.
 - **Add HID support (keyboard and mouse).**
 - **Add storage support.**
 - **Add multiprocessing support.**
-- **Add Userland space.**
+- **Add User space.**
 
 ## Check list:
 - **Kernel loader in x86 protected mode**
