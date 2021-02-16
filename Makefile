@@ -8,13 +8,13 @@ LD = ld -melf_i386
 
 OBJCPY = objcopy
 
-DEFINES = -Iincludes/ -Iincludes/clib
+DEFINES = -Iincludes/ -Iincludes/clib/
 
 EMU = qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off -serial chardev:char0 -mon chardev=char0
 
 KOBJS = boot/setup.o boot/start.o boot/memory.o
 KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o
-OBJS = clib/string.o clib/stdlib.o
+OBJS = clib/string.o clib/stdlib.o clib/stdio.o
 
 all: clean os.bin
 

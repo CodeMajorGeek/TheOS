@@ -4,16 +4,17 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 void k_entry(void)
 {
     logger_init();
 
-    klog(INFO, "Initializing hardware !\r\n");
+    klog(DEBUG, "Initializing hardware !\r\n");
     tty_init();
     klog(INFO, "Hardware initialized !\r\n");
 
-    tty_puts("Je suis sur le tty !");
+    printf("salut %s !", "toi");
 
     abort();
 
