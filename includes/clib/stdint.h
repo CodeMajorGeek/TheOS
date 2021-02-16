@@ -1,5 +1,5 @@
-#ifndef TheOS_STDINT_H
-#define TheOS_STDINT_H
+#ifndef _CLIB_STDINT_H
+#define _CLIB_STDINT_H
 
 #define NULL 0
 

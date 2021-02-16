@@ -1,5 +1,5 @@
-#ifndef THEOS_SERIAL_H
-#define THEOS_SERIAL_H
+#ifndef _KERNEL_SERIAL_H
+#define _KERNEL_SERIAL_H
 
 #include <kernel/io.h>
 

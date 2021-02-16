@@ -1,5 +1,5 @@
-#ifndef THEOS_STDDEF_H
-#define THEOS_STDDEF_H
+#ifndef _CLIB_STDDEF_H
+#define _CLIB_STDDEF_H
 
 #include <stdint.h>
 

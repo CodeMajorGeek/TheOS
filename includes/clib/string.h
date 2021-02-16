@@ -1,5 +1,5 @@
-#ifndef THEOS_STRING_H
-#define THEOS_STRING_H
+#ifndef _CLIB_STRING_H
+#define _CLIB_STRING_H
 
 #include <stddef.h>
 

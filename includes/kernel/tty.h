@@ -1,5 +1,5 @@
-#ifndef THEOS_TTY_H
-#define THEOS_TTY_H
+#ifndef _KERNEL_TTY_H
+#define _KERNEL_TTY_H
 
 #include <kernel/vga.h>
 

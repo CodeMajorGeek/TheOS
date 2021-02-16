@@ -1,5 +1,5 @@
-#ifndef THEOS_VGA_H
-#define THEOS_VGA_H
+#ifndef _KERNEL_VGA_H
+#define _KERNEL_VGA_H
 
 #include <stdint.h>
 

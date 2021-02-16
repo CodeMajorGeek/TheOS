@@ -1,5 +1,5 @@
-#ifndef THEOS_LOGGER_H
-#define THEOS_LOGGER_H
+#ifndef _KERNEL_LOGGER_H
+#define _KERNEL_LOGGER_H
 
 #include <kernel/serial.h>
 
@@ -12,6 +12,7 @@
 #define DEBUG   1
 #define WARN    2
 #define ERROR   3
+#define FATAL   4
 
 void logger_init(void);
 void klog(uint8_t, const char*);

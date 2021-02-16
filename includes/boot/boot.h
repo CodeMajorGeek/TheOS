@@ -1,8 +1,8 @@
-#ifndef BOOT_H
-#define BOOT_H
+#ifndef _BOOT_H
+#define _BOOT_H
 
-#define LOADER_BASE 0x7c00
-#define LOADER_END  0x7e00
+#define LOADER_BASE 0x7C00
+#define LOADER_END  0x7E00
 
 #define KERNEL_BASE 0x100000
 

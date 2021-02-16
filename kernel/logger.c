@@ -18,10 +18,12 @@ void klog(uint8_t level, const char* str)
     case 2:
         serial_puts(SERIAL, "[WARN] ");
         break;
-    default:
+    case 3:
         serial_puts(SERIAL, "[ERROR] ");
+        break;
+    default:
+        serial_puts(SERIAL, "[FATAL] ");
         break;
     }
     serial_puts(SERIAL, str);
-    serial_puts(SERIAL, "\r\n");
 }

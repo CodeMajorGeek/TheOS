@@ -12,9 +12,9 @@ DEFINES = -Iincludes/ -Iincludes/clib
 
 EMU = qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off -serial chardev:char0 -mon chardev=char0
 
-OBJS = boot/setup.o boot/start.o boot/memory.o
-OBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o
-OBJS += clib/string.o
+KOBJS = boot/setup.o boot/start.o boot/memory.o
+KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o
+OBJS = clib/string.o clib/stdlib.o
 
 all: clean os.bin
 
@@ -37,9 +37,10 @@ kernel.ld: CPPFLAGS += -P
 kernel.ld: kernel.ld.S
 	$(CC) -E $(ASFLAGS) $(CPPFLAGS) $(DEFINES) -c $< -o $@
 
-kernel.o: kernel.ld $(OBJS)
-	$(LD) -T $< -o $@ $(OBJS)
+kernel.o: kernel.ld $(KOBJS) $(OBJS)
+	$(LD) -T $< -o $@ $(KOBJS) $(OBJS)
 
+kernel.bin: CPPFLAGS += -D__THEOS_KERNEL
 kernel.bin: kernel.o
 	$(OBJCPY) -R .note -R .comment -S $< $@
 

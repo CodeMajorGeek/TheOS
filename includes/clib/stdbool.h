@@ -1,5 +1,5 @@
-#ifndef TheOS_STDBOOL_H
-#define TheOS_STDBOOL_H
+#ifndef _CLIB_STDBOOL_H
+#define _CLIB_STDBOOL_H
 
 #define FALSE 0
 #define TRUE 1

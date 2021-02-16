@@ -1,5 +1,5 @@
-#ifndef THEOS_IO_H
-#define THEOS_IO_H
+#ifndef _KERNEL_IO_H
+#define _KERNEL_IO_H
 
 #include <stdint.h>
 

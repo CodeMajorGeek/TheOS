@@ -12,15 +12,35 @@ SECTIONS
     . = _start + SIZEOF_HEADERS;
 
     // Kernel starts with code, followed by ro data and w data.
-    .text  : { *(.setup) *(.start) *(.text) } = 0x90
-    .rodata : { *(.rodata) *(.rodata.*)
+    .text BLOCK(4K) : ALIGN(4K)
+    { 
+        *(.setup)
+        *(.start)
+        *(.text)
+    }
+
+    .rodata BLOCK(4K) : ALIGN(4K)
+    { 
+        *(.rodata)
+        *(.rodata.*)
         . = ALIGN(0x1000);
-        _end_kernel_text = .; }
-    .data : { *(.data)
-        _signature = .; LONG(0xaa55aa55); }
+        _end_kernel_text = .;
+    }
+
+    .data BLOCK(4K) : ALIGN(4K)
+    { 
+        *(.data)
+        _signature = .; LONG(0xaa55aa55);
+    }
+
     // BSS (zero-initialized data) is after everyting else.
     _start_bss = .;
-    .bss : { *(.bss) }
+    .bss BLOCK(4K) : ALIGN(4K)
+    {
+        *(COMMON)
+        *(.bss)
+    }
+
     _end_bss = .;
     _end = .;
     ASSERT(_end - _start <= 512K, "Kernel image is too big.")
