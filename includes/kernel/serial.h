@@ -18,6 +18,6 @@ char serial_read(uint16_t);
 
 bool serial_is_transmit_empty(uint16_t);
 void serial_write(uint16_t, char);
-void serial_puts(uint16_t, const char *);
+void serial_puts(uint16_t, const char*);
 
 #endif

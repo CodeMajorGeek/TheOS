@@ -14,6 +14,6 @@
 #define ERROR   3
 
 void logger_init(void);
-void klog(uint8_t, const char *);
+void klog(uint8_t, const char*);
 
 #endif

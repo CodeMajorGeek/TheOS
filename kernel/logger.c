@@ -5,7 +5,7 @@ void logger_init(void)
     serial_init(SERIAL);
 }
 
-void klog(uint8_t level, const char *str)
+void klog(uint8_t level, const char* str)
 {
     switch (level)
     {

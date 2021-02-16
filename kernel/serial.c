@@ -43,7 +43,7 @@ void serial_write(uint16_t serial, char a)
     io_outb(serial, a);
 }
 
-void serial_puts(uint16_t serial, const char *str)
+void serial_puts(uint16_t serial, const char* str)
 {
     while (*str)
         serial_write(serial, *str++);
