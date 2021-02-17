@@ -8,7 +8,8 @@
 #define CMOS_REGISTER_IN        0x70
 #define CMOS_REGISTER_OUT       0x71
 
-enum cmos_time {
+enum cmos_time
+{
     CMOS_SECONDS = 0x00,
     CMOS_MINUTES = 0x02,
     CMOS_HOURS = 0x04,

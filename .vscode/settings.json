@@ -2,6 +2,7 @@
     "files.associations": {
         "string.h": "c",
         "type_traits": "c",
-        "limits": "c"
+        "limits": "c",
+        "idt.h": "c"
     }
 }

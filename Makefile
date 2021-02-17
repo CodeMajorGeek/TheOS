@@ -2,50 +2,53 @@ CC = gcc -m32
 CPPFLAGS = -nostdinc -P
 CFLAGS = -msoft-float -O -fno-stack-protector -fno-exceptions -fno-builtin -fno-pie -g -ffreestanding
 CPPFLAGS = -nostdinc
-ASFLAGS = -Wa,--gstabs
 
-LD = ld -melf_i386
+GAS = as --32
+
+LD = ld -m elf_i386
 
 OBJCPY = objcopy
+
+GRUB = grub-mkrescue
+GRUB_CHECK = grub-file --is-x86-multiboot
 
 DEFINES = -Iincludes/ -Iincludes/clib/
 
 EMU = qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off -serial chardev:char0 -mon chardev=char0
 
-KOBJS = boot/setup.o boot/start.o boot/memory.o
-KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o kernel/memory.o
+KOBJS = boot/boot.o
+KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o kernel/memory.o kernel/keyboard.o
+KOBJS += kernel/gdt_wrapper.o kernel/gdt.o kernel/interrupt.o kernel/idt_wrapper.o kernel/idt.o kernel/isr.o
 OBJS = clib/string.o clib/stdlib.o clib/stdio.o
 
-all: clean os.bin
+all: clean TheOS.iso
 
 run: all
-	$(EMU) -fda os.bin
+	$(EMU) -cdrom TheOS.iso
 
 clean:
 	$(MAKE) -C boot/ clean;
 	$(MAKE) -C kernel/ clean;
 	$(MAKE) -C clib/ clean;
-	rm -rf *.bin *.ld *.o *.log
+	rm -rf *.bin *.o *.log *.iso iso/
 
-os.bin: boot.bin kernel.bin
-	cat $^ > $@
+TheOS.iso: boot/grub.cfg TheOS.bin
+	mkdir -p iso/boot/grub
+	cp $< iso/boot/grub/
+	cp TheOS.bin iso/boot/
+	$(GRUB) -o $@ iso
 
-boot.bin: boot/boot.o
-	$(LD) -N -e 0 -Ttext 0x7c00 --oformat binary -o $@ $^
-
-kernel.ld: CPPFLAGS += -P
-kernel.ld: kernel.ld.S
-	$(CC) -E $(ASFLAGS) $(CPPFLAGS) $(DEFINES) -c $< -o $@
-
-kernel.o: kernel.ld $(KOBJS) $(OBJS)
-	$(LD) -T $< -o $@ $(KOBJS) $(OBJS)
-
-kernel.bin: CPPFLAGS += -D__THEOS_KERNEL
-kernel.bin: kernel.o
+TheOS.bin: TheOS.o
 	$(OBJCPY) -R .note -R .comment -S $< $@
+	$(GRUB_CHECK) $@
+
+TheOS.o: CPPFLAGS += -D__THEOS_KERNEL
+TheOS.o: kernel.ld $(KOBJS) $(OBJS)
+	$(LD) -T $< -o $@ $(KOBJS) $(OBJS)
+	
 
 %.o: %.S
-	$(CC) -o $@ -c $< $(ASFLAGS) $(CPPFLAGS) $(DEFINES)
+	$(GAS) -o $@ $<
 
 %.o: %.c
 	$(CC) $(CFLAGS) $(CPPFLAGS) $(DEFINES) -o $@ -c $<

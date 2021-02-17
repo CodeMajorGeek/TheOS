@@ -3,7 +3,8 @@
 
 #include <stdint.h>
 
-enum vga_color {
+enum vga_color
+{
     VGA_BLACK = 0,
     VGA_BLUE = 1,
     VGA_GREEN = 2,
