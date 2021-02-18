@@ -6,7 +6,7 @@
 #include <kernel/logger.h>
 
 #include <stdint.h>
-#include <stdlib.h>
+#include <stdio.h>
 
 #define PIC1        0x20
 #define PIC2        0xA0

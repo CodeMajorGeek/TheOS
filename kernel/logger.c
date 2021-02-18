@@ -26,4 +26,5 @@ void klog(uint8_t level, const char* str)
         break;
     }
     serial_puts(SERIAL, str);
+    serial_puts(SERIAL, "\r\n");
 }

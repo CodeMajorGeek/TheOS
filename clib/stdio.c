@@ -204,5 +204,126 @@ char* itoa(int value, char* buf, size_t length, unsigned int base)
 
 int sprintf(char* buf, const char* format, ...)
 {
-    return EOF;
+    va_list parameters;
+    va_start(parameters, format);
+
+    int written = 0;
+
+    while (*format != '\0')
+    {
+        size_t maxrem = INT_MAX - written;
+        if (format[0] != '%' || format[1] == '%')
+        {
+            if (format[0] == '%')
+                format++;
+            size_t amount = 1;
+            while (format[amount] && format[amount] != '%')
+                amount++;
+            if (maxrem < amount)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strncat(buf, format, amount);
+            format += amount;
+            written += amount;
+            continue;
+        }
+
+        const char* format_begun_at = format++;
+        if (*format == 'c' || *format == 'C')
+        {
+            bool uppercase = *format == 'C';
+            format++;
+            char c = (char) va_arg(parameters, int); // char -> int.
+            if (!maxrem)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            buf[written] = c;
+            written++;
+        }
+        else if (*format == 's' || *format == 'S')
+        {   
+            bool uppercase = *format == 'S';
+            format++;
+            const char* str = va_arg(parameters, const char*);
+            size_t len = strlen(str);
+            if (maxrem < len)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strcat(buf, str);
+            written += len;
+        }
+        else if (*format == 'd')
+        {
+            format++;
+            int v = va_arg(parameters, int);
+
+            char digits[12]; // max digits size in int decimal.
+            itoa(v, digits, sizeof(digits), DECIMAL);
+            
+            size_t len = strlen(digits);
+            if (maxrem < len)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strcat(buf, digits);
+            written += len;
+        }
+        else if (*format == 'b' || *format == 'B')
+        {
+            bool uppercase = *format == 'B';
+            format++;
+            int v = va_arg(parameters, bool);
+            
+            const char* str = v ? "true" : "false";
+
+            size_t len = strlen(str);
+            if (maxrem < len)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strcat(buf, str);
+            written += len;
+        }
+        else if (*format == 'h' || *format == 'H')
+        {
+            bool uppercase = *format == 'H';
+            format++;
+            int v = va_arg(parameters, bool);
+            
+            char digits[7]; // max digits size in int hexadecimal.
+            itoa(v, digits, sizeof(digits), HEXADECIMAL);
+
+            size_t len = strlen(digits);
+            if (maxrem < len)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strcat(buf, digits);
+            written += len;
+        }
+        else
+        {
+            format = format_begun_at;
+            size_t len = strlen(format);
+            if (maxrem < len)
+            {
+                // TODO: Implement OVERFLOW.
+                return EOF;
+            }
+            strcat(buf, format);
+            written += len;
+            format += len;
+        }
+    }
+    va_end(parameters);
+    return written;
 }

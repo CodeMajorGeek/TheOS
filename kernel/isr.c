@@ -109,12 +109,14 @@ void isr_register_interrupt_handler(int index, isr_t handler)
 
 void isr_handler(registers_t r)
 {
-    klog(FATAL, "Received ISR: \r\n\t");
-
     if (r.int_no < MAX_KNOWN_EXCEPTIONS)
-        klog(FATAL, exception_messages[r.int_no]);
+    {
+        char buf[128];
+        sprintf(buf, "Received ISR:\r\n\t%s.", exception_messages[r.int_no]);
+        klog(FATAL, buf);
+    }
     else
-        klog(FATAL, "Reserved");
+        klog(FATAL, "Received ISR:\r\n\tReserved.");
     abort();
 }
 

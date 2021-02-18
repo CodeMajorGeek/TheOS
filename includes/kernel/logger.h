@@ -4,6 +4,8 @@
 #include <kernel/serial.h>
 
 #include <stdint.h>
+#include <stdarg.h>
+#include <stdio.h>
 
 #define SERIAL COM1
 
