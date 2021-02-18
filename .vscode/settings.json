@@ -3,6 +3,10 @@
         "string.h": "c",
         "type_traits": "c",
         "limits": "c",
-        "idt.h": "c"
+        "idt.h": "c",
+        "stdlib.h": "c",
+        "isr.h": "c",
+        "tty.h": "c",
+        "vga.h": "c"
     }
 }

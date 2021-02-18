@@ -14,6 +14,7 @@ void tty_init(void)
     tty_color = vga_entry_color(VGA_LIGHT_GREY, VGA_BLACK);
     tty_buffer = VGA_MEMORY;
     tty_clear();
+    tty_enable_cursor(false);
 }
 
 void tty_set_color(uint8_t color)
@@ -55,6 +56,7 @@ void tty_write(const char* data, size_t size)
 {
     for (size_t i = 0; i < size; i++)
         tty_putc(data[i]);
+    tty_update_cursor(tty_col, tty_row);
 }
 
 void tty_puts(const char* s)
@@ -67,4 +69,24 @@ void tty_clear(void)
     tty_col = 0;
     tty_row = 0;
     memsetw(tty_buffer, vga_entry(' ', tty_color), VGA_WIDTH * VGA_HEIGHT);
+}
+
+void tty_enable_cursor(bool enabled)
+{   
+    io_outb(CURSOR_CTRL, 0x0A);
+    uint8_t cursor_shape = io_inb(CURSOR_DATA) & 0b00011111;
+    if (enabled)
+        io_outb(CURSOR_DATA, cursor_shape & ~0x20);
+    else
+        io_outb(CURSOR_DATA, cursor_shape | 0x20);
+}
+
+void tty_update_cursor(uint8_t x, uint8_t y)
+{
+    uint16_t pos = y * VGA_WIDTH + x;
+
+    io_outb(CURSOR_CTRL, 0x0F);
+    io_outb(CURSOR_DATA, (uint8_t) (pos & 0xFF));
+    io_outb(CURSOR_CTRL, 0x0E);
+    io_outb(CURSOR_DATA, (uint8_t) ((pos >> 8) & 0xFF));
 }

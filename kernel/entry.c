@@ -17,13 +17,8 @@ void k_entry(void)
     tty_init();
     keyboard_init();
     klog(INFO, "Hardware initialized !");
-    
-    __asm__ __volatile__("int $13");
 
-    char buf[512];
-    sprintf(buf, "Je suis un test: %d", 1024);
-
-    puts(buf);
+    printf("Welcome to TheOS !\n");
 
     while (true)
         __asm__("hlt");
