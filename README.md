@@ -18,3 +18,4 @@ TheOS is an OS written by me.
 - **Serial port communication.**
 - **Logging using serial COM1 and QEMU.**
 - **TTY terminal.**
+- **Interrupt Managment (IRQs & ISRs)**

@@ -30,7 +30,19 @@ void tty_put_entry_at(unsigned char c, uint8_t color, size_t x, size_t y)
 void tty_putc(char c)
 {
     unsigned char uc = (unsigned char) c;
-    tty_put_entry_at(uc, tty_color, tty_col, tty_row);
+    
+    switch (c)
+    {
+        case '\n':
+            tty_row++;
+        case '\r':
+            tty_col = 0;
+            return;
+        default:
+            tty_put_entry_at(uc, tty_color, tty_col, tty_row);
+            break;
+    }
+
     if (++tty_col == VGA_WIDTH)
     {
         tty_col = 0;

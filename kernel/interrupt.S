@@ -1,5 +1,3 @@
-.section .text
-
 .extern isr_handler
 .extern irq_handler
 
@@ -57,21 +55,21 @@
 
 isr_common_stub:
     pusha
-    mov %ds, %ax
+    movw %ds, %ax
     push %eax
-    mov $0x10, %ax # Kernel data segment descriptor.
-    mov %ax, %ds
-    mov %ax, %es
-    mov %ax, %fs
-    mov %ax, %gs
+    movw $0x10, %ax # Kernel data segment descriptor.
+    movw %ax, %ds
+    movw %ax, %es
+    movw %ax, %fs
+    movw %ax, %gs
 
     call isr_handler
 
     pop %eax
-    mov %ax, %ds
-    mov %ax, %es
-    mov %ax, %fs
-    mov %ax, %gs
+    movw %ax, %ds
+    movw %ax, %es
+    movw %ax, %fs
+    movw %ax, %gs
     popa
     add $8, %esp
     sti
@@ -79,21 +77,21 @@ isr_common_stub:
 
 irq_common_stub:
     pusha
-    mov %ds, %ax
+    movw %ds, %ax
     push %eax
-    mov $0x10, %ax # Kernel data segment descriptor.
-    mov %ax, %ds
-    mov %ax, %es
-    mov %ax, %fs
-    mov %ax, %gs
+    movw $0x10, %ax # Kernel data segment descriptor.
+    movw %ax, %ds
+    movw %ax, %es
+    movw %ax, %fs
+    movw %ax, %gs
 
     call irq_handler
 
-    pop %ebx
-    mov %ax, %ds
-    mov %ax, %es
-    mov %ax, %fs
-    mov %ax, %gs
+    pop %eax
+    movw %ax, %ds
+    movw %ax, %es
+    movw %ax, %fs
+    movw %ax, %gs
     popa
     add $8, %esp
     sti

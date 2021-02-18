@@ -1,7 +1,7 @@
 #include <kernel/gdt.h>
 
-struct GDT gdt_entries[3];
-struct GDT_PTR gdt_first;
+GDT_t gdt_entries[MAX_GDT_DESC];
+GDT_PTR_t gdt_first;
 
 void gdt_init(void)
 {
@@ -30,7 +30,7 @@ void gdt_init(void)
     gdt_entries[DATA_SEGMENT].base_high = 0;
 
     gdt_first.limit_size = sizeof(gdt_entries) - 1;
-    gdt_first.base_address = (struct GDT*) &gdt_entries;
+    gdt_first.base_address = (uint32_t) gdt_entries;
 
-    load_gdt((struct GDT*) &gdt_first);
+    load_gdt((uint32_t) (&gdt_first));
 }

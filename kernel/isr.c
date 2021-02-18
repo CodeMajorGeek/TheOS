@@ -2,6 +2,29 @@
 
 isr_t interrupt_handlers[MAX_ENTRIES];
 
+const char* exception_messages[MAX_KNOWN_EXCEPTIONS] = 
+{
+    "Division By Zero",
+    "Debug",
+    "Non Maskable Interrupt",
+    "Breakpoint",
+    "Into Detected Overflow",
+    "Out of Bounds",
+    "Invalid Opcode",
+    "No Coprocessor",
+    "Double Fault",
+    "Coprocessor Segment Overrun",
+    "Bad TSS",
+    "Segment Not Present",
+    "Stack Fault",
+    "General Protection Fault",
+    "Page Fault",
+    "Unknown Interrupt",
+    "Coprocessor Fault",
+    "Alignment Check",
+    "Machine Check"
+};
+
 void isr_init(void)
 {
     idt_set_gate(0, (uint32_t) isr0);
@@ -35,31 +58,27 @@ void isr_init(void)
     idt_set_gate(28, (uint32_t) isr28);
     idt_set_gate(29, (uint32_t) isr29);
     idt_set_gate(30, (uint32_t) isr30);
-    idt_set_gate(31, (uint32_t) isr30);
+    idt_set_gate(31, (uint32_t) isr31);
 
     /* ICW1: Begin initialization. */
-    io_outb(PIC1_CTRL, 0x11);
-    io_outb(PIC2_CTRL, 0x11);
+    io_outb(PIC1_CTRL, ICW1);
+    io_outb(PIC2_CTRL, ICW1);
 
     /* ICW2: Remap offset address of the idt_table. */
     io_outb(PIC1_DATA, 0x20);
     io_outb(PIC2_DATA, 0x28);
 
     /* ICW3: Setup cascading. */
-    io_outb(PIC1_DATA, 0x00);
-    io_outb(PIC2_DATA, 0x00);
+    io_outb(PIC1_DATA, 0x4);
+    io_outb(PIC2_DATA, 0x2);
 
     /* ICW4: Environment info. */
     io_outb(PIC1_DATA, 0x01);
     io_outb(PIC2_DATA, 0x01);
 
-    /* ??? */
-    io_outb(PIC1_DATA, 0x04);
-    io_outb(PIC2_DATA, 0x02);
-
-    /* Mask interrupts. */
-    io_outb(PIC1_DATA, 0xFF);
-    io_outb(PIC2_DATA, 0xFF);
+    /* Clear mask register. */
+    io_outb(PIC1_DATA, 0x0);
+    io_outb(PIC2_DATA, 0x0);
 
     /* Setup the IRQs. */
     idt_set_gate(32, (uint32_t) irq0);
@@ -82,25 +101,29 @@ void isr_init(void)
     idt_set();
 }
 
-void isr_register_interrupt_handler(uint8_t index, isr_t handler)
+void isr_register_interrupt_handler(int index, isr_t handler)
 {
-    interrupt_handlers[index] = handler;
+    if (index < MAX_ENTRIES)
+        interrupt_handlers[index] = handler;
 }
 
 void isr_handler(registers_t r)
 {
-    klog(ERROR, "Received ISR !\r\n");
+    klog(FATAL, "Received ISR: \r\n\t");
+
+    if (r.int_no < MAX_KNOWN_EXCEPTIONS)
+        klog(FATAL, exception_messages[r.int_no]);
+    else
+        klog(FATAL, "Reserved");
+    abort();
 }
 
 void irq_handler(registers_t r)
 {   
     /* Send EOI to the PICs. */
     if (r.int_no >= 40)
-        io_outb(PIC2_CTRL, 0x20); // Slave.
-    io_outb(PIC1_CTRL, 0x20); // Master.
-
-    if (r.int_no == 33)
-        klog(INFO, "Keyboard IRQ !");
+        io_outb(PIC2, PIC_EOI); // Slave.
+    io_outb(PIC1, PIC_EOI); // Master.
 
     isr_t handler = interrupt_handlers[r.int_no];
     if (handler != 0)

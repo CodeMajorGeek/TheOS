@@ -6,11 +6,19 @@
 #include <kernel/logger.h>
 
 #include <stdint.h>
+#include <stdlib.h>
 
-#define PIC1_CTRL 0x20
-#define PIC2_CTRL 0xA0
-#define PIC1_DATA 0x21
-#define PIC2_DATA 0xA1
+#define PIC1        0x20
+#define PIC2        0xA0
+#define PIC1_CTRL   PIC1
+#define PIC2_CTRL   PIC2
+#define PIC1_DATA   (PIC1 + 1)
+#define PIC2_DATA   (PIC2 + 2)
+#define PIC_EOI     0x20
+#define ICW1        0x11
+#define ICW4        0x01
+
+#define MAX_KNOWN_EXCEPTIONS 19
 
 #define IRQ0 32
 #define IRQ1 33
@@ -95,6 +103,6 @@ void isr_handler(registers_t);
 void irq_handler(registers_t);
 
 void isr_init(void);
-void isr_register_interrupt_handler(uint8_t, isr_t);
+void isr_register_interrupt_handler(int, isr_t);
 
 #endif

@@ -14,8 +14,8 @@ void idt_set_gate(int inum, uint32_t isr)
 
 void idt_set(void)
 {
-    idt_first.limit_size = MAX_ENTRIES * sizeof(IDT_t) - 1;
-    idt_first.base_address = (uint32_t) &idt_entries;
+    idt_first.limit_size = sizeof(idt_entries) - 1;
+    idt_first.base_address = (uint32_t) idt_entries;
 
-    load_idt(&idt_first);
+    load_idt((uint32_t) &(idt_first));
 }

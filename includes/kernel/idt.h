@@ -24,7 +24,7 @@ typedef struct
     uint32_t base_address;   // Base address of the first IDT segment.
 } __attribute__((__packed__)) IDT_PTR_t;
 
-extern void load_idt(IDT_PTR_t*);
+extern void load_idt(uint32_t);
 
 void idt_set_gate(int, uint32_t);
 void idt_set(void);

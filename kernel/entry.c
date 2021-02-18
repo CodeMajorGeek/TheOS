@@ -2,7 +2,7 @@
 #include <kernel/isr.h>
 #include <kernel/logger.h>
 #include <kernel/tty.h>
-#include <kernel/io.h>
+#include <kernel/keyboard.h>
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -13,13 +13,12 @@ void k_entry(void)
     isr_init();
 
     logger_init();
-    klog(DEBUG, "Initializing hardware !\r\n");
+    klog(INFO, "Initializing hardware !\r\n");
     tty_init();
+    keyboard_init();
     klog(INFO, "Hardware initialized !\r\n");
-
-    puts("Je suis un test !");
-
-    io_outb(0x21, 0xFD);
+    
+    __asm__ __volatile__("int $13");
 
     while (true)
         __asm__("hlt");

@@ -26,6 +26,9 @@ all: clean TheOS.iso
 run: all
 	$(EMU) -cdrom TheOS.iso
 
+gdb: all
+	$(EMU) -cdrom TheOS.iso -s -S
+
 clean:
 	$(MAKE) -C boot/ clean;
 	$(MAKE) -C kernel/ clean;
