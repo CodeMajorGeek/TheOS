@@ -1,13 +1,18 @@
 #ifndef _KERNEL_GDT_H
 #define _KERNEL_GDT_H
 
+#include <kernel/tss.h>
+
 #include <stdint.h>
 
-#define MAX_GDT_DESC    3
+#define MAX_GDT_DESC    6
 
-#define NULL_SEGMENT    0
-#define CODE_SEGMENT    1
-#define DATA_SEGMENT    2
+#define NULL_SEGMENT            0
+#define KERNEL_CODE_SEGMENT     1
+#define KERNEL_DATA_SEGMENT     2
+#define USER_CODE_SEGMENT       3
+#define USER_DATA_SEGMENT       4
+#define TSS_SEGMENT             5
 
 typedef struct
 {
@@ -27,6 +32,7 @@ typedef struct
 
 extern void load_gdt(uint32_t);
 
+void gdt_set_gate(uint8_t, uint32_t, uint32_t, uint8_t, uint8_t);
 void gdt_init(void);
 
 #endif

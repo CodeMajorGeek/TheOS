@@ -14,7 +14,7 @@ void tty_init(void)
     tty_color = vga_entry_color(VGA_LIGHT_GREY, VGA_BLACK);
     tty_buffer = VGA_MEMORY;
     tty_clear();
-    tty_enable_cursor(false);
+    tty_enable_cursor(true);
 }
 
 void tty_set_color(uint8_t color)

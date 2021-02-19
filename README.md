@@ -9,10 +9,11 @@ TheOS is an OS written by me.
 - **Have a good Clib implementation for future user space.**
 
 ## Ingoing things:
-- **Clib coding.**
 - **Kernel coding.**
+- **CLib coding.**
 - **Memory managment.**
 - **HID kernel support.**
+- **Usermode ring3 support.**
 
 ## Check list:
 - **Kernel loader in x86 protected mode.**
