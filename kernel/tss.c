@@ -18,7 +18,13 @@ void tss_init(uint8_t index, uint16_t ss0, uint16_t esp0)
     tss_entry.ss = tss_entry.ds = tss_entry.es = tss_entry.fs = tss_entry.gs = 0x13;
 }
 
+void tss_switch(void)
+{
+    // When task implemented, must set kernel stack pointer here !
+    tss_switch_usermode();
+}
+
 void test_usermode(void)
 {
-    // Usermode ring3 !
+    // __asm__ __volatile__("int $0x80");
 }

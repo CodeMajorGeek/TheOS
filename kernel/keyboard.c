@@ -1,6 +1,6 @@
 #include <kernel/keyboard.h>
 
-void keyboard_callback(registers_t regs)
+void keyboard_callback(registers_t* regs)
 {
     printf("Keyboard interrupt IRQ1, scancode: %H\n", io_inb(0x60));
 }

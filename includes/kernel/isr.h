@@ -1,12 +1,16 @@
 #ifndef _KERNEL_ISR_H
 #define _KERNEL_ISR_H
 
-#include <kernel/idt.h>
 #include <kernel/io.h>
+#include <kernel/idt.h>
+#include <kernel/page.h>
+#include <kernel/system.h>
 #include <kernel/logger.h>
+#include <kernel/syscall.h>
 
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
 
 #define PIC1        0x20
@@ -37,16 +41,6 @@
 #define IRQ13 45
 #define IRQ14 46
 #define IRQ15 47
-
-typedef struct
-{
-    uint32_t ds;
-    uint32_t edi, esi, ebp, esp, ebx, edx, ecx, eax;    // Pushed by "pusha".
-    uint32_t int_no, err_code;                          // Interrupt number and error code.
-    uint32_t eip, cs, eflags, useresp, ss;              // Pushed by the processor automatically.
-} registers_t;
-
-typedef void (*isr_t)(registers_t);
 
 /* ISRs reserved for CPU exceptions. */
 extern void isr0(void);
@@ -81,6 +75,9 @@ extern void isr28(void);
 extern void isr29(void);
 extern void isr30(void);
 extern void isr31(void);
+
+/* ISRs Reserved for the kernel. */
+extern void isr128(void);
 
 /* IRQ definitions. */
 extern void irq0(void);

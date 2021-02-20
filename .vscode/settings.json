@@ -7,6 +7,11 @@
         "stdlib.h": "c",
         "isr.h": "c",
         "tty.h": "c",
-        "vga.h": "c"
+        "vga.h": "c",
+        "logger.h": "c",
+        "stdio.h": "c",
+        "stdint.h": "c",
+        "syscall.h": "c",
+        "io.h": "c"
     }
 }

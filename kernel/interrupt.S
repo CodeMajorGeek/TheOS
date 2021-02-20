@@ -34,6 +34,7 @@
 .globl isr29
 .globl isr30
 .globl isr31
+.globl isr128
 
 # IRQs.
 .globl irq0
@@ -313,6 +314,13 @@ isr31:
     cli
     push $0
     push $31
+    jmp isr_common_stub
+
+# 128: Syscalls.
+isr128:
+    cli
+    push $0
+    push $128
     jmp isr_common_stub
 
 # IRQs handlers.

@@ -24,6 +24,8 @@ stack_top:
 
 _start:
     mov $stack_top, %esp
+    push %esp
+    push %ebx
     call k_entry
     cli
 

@@ -19,6 +19,7 @@ EMU = qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signa
 KOBJS = boot/boot.o
 KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o kernel/memory.o kernel/keyboard.o
 KOBJS += kernel/gdt_wrapper.o kernel/gdt.o kernel/interrupt.o kernel/idt_wrapper.o kernel/idt.o kernel/isr.o kernel/tss_wrapper.o kernel/tss.o
+KOBJS += kernel/syscall.o kernel/ordered_array.o kernel/vmem.o kernel/kmem.o kernel/frame.o kernel/process_wrapper.o kernel/page.o
 OBJS = clib/string.o clib/stdlib.o clib/stdio.o
 
 all: clean TheOS.iso

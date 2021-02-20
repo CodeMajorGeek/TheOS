@@ -27,6 +27,7 @@ const char* exception_messages[MAX_KNOWN_EXCEPTIONS] =
 
 void isr_init(void)
 {
+    /* CPU reserved ISRs. */
     idt_set_gate(0, (uint32_t) isr0);
     idt_set_gate(1, (uint32_t) isr1);
     idt_set_gate(2, (uint32_t) isr2);
@@ -59,6 +60,9 @@ void isr_init(void)
     idt_set_gate(29, (uint32_t) isr29);
     idt_set_gate(30, (uint32_t) isr30);
     idt_set_gate(31, (uint32_t) isr31);
+
+    /* Kernel reserved ISRs. */
+    idt_set_gate(128, (uint32_t) isr128);
 
     /* ICW1: Begin initialization. */
     io_outb(PIC1_CTRL, ICW1);
@@ -109,11 +113,21 @@ void isr_register_interrupt_handler(int index, isr_t handler)
 
 void isr_handler(registers_t r)
 {
-    if (r.int_no < MAX_KNOWN_EXCEPTIONS)
+    if (r.int_no == 14)
+        page_fault_handler(&r);
+    else if (r.int_no < MAX_KNOWN_EXCEPTIONS)
     {
-        char buf[128];
-        sprintf(buf, "Received ISR:\r\n\t%s.", exception_messages[r.int_no]);
+        const char* exception_message = exception_messages[r.int_no];
+        size_t message_len = 18 + strlen(exception_message);
+        char buf[message_len];
+        memset(&buf, '\0', message_len);
+        sprintf(buf, "Received ISR:\r\n\t%s.", exception_message);
         klog(FATAL, buf);
+    }
+    else if (r.int_no == 0x80)
+    {
+        syscall_handler(&r);
+        return;
     }
     else
         klog(FATAL, "Received ISR:\r\n\tReserved.");
@@ -129,5 +143,5 @@ void irq_handler(registers_t r)
 
     isr_t handler = interrupt_handlers[r.int_no];
     if (handler != 0)
-        handler(r);
+        handler(&r);
 }

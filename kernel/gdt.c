@@ -22,7 +22,7 @@ void gdt_set_gate(uint8_t index, uint32_t base, uint32_t limit, uint8_t access, 
 void gdt_init(void)
 {
     /* Set null segment */
-    /*gdt_set_gate(NULL_SEGMENT, 0, 0, 0, 0);
+    gdt_set_gate(NULL_SEGMENT, 0, 0, 0, 0);
     
     /* Set kernel code segment. */
     gdt_set_gate(KERNEL_CODE_SEGMENT, 0, 0xFFFFFFFF, 0x9A, 0xCF);
@@ -41,6 +41,6 @@ void gdt_init(void)
     gdt_first.limit_size = sizeof(gdt_entries) - 1;
     gdt_first.base_address = (uint32_t) gdt_entries;
 
-    load_gdt((uint32_t) (&gdt_first));
+    load_gdt((uint32_t) &gdt_first);
     load_tss();
 }

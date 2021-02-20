@@ -9,6 +9,7 @@ load_tss:
     ret
 
 tss_switch_usermode:
+    cli
     movw $0x23, %ax
     movw %ax, %ds
     movw %ax, %es
@@ -17,9 +18,9 @@ tss_switch_usermode:
 
     mov %esp, %eax
 
-    push $0x23 # User data segment with 2 lo bits set for ring 3.
-    push %eax  # Push current esp for iret stack frame.
+    pushl $0x23 # User data segment with 2 lo bits set for ring 3.
+    pushl %eax  # Push current esp for iret stack frame.
     pushf
     push $0x1B # User code segment with 2 lo bits set for ring 3.
-    push test_usermode
+    push $test_usermode
     iret

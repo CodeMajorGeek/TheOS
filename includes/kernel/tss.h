@@ -41,5 +41,6 @@ extern void load_tss(void);
 extern void tss_switch_usermode(void);
 
 void tss_init(uint8_t, uint16_t, uint16_t);
+void tss_switch(void);
 
 #endif
