@@ -126,6 +126,7 @@ void isr_handler(registers_t r)
     }
     else if (r.int_no == 0x80)
     {
+        klog(DEBUG, "Syscall interrupt !");
         syscall_handler(&r);
         return;
     }

@@ -17,10 +17,16 @@ tss_switch_usermode:
     movw %ax, %gs # SS handler by iret.
 
     mov %esp, %eax
-
     pushl $0x23 # User data segment with 2 lo bits set for ring 3.
     pushl %eax  # Push current esp for iret stack frame.
     pushf
+
+    pop %eax
+    or $0x200, %eax # Set the IF flag.
+    push %eax
+
     push $0x1B # User code segment with 2 lo bits set for ring 3.
-    push $test_usermode
+    push $1f
     iret
+1:
+    ret

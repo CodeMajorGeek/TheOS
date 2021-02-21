@@ -9,13 +9,13 @@
 
 typedef struct 
 {
-    uint16_t link, link_reserved;
+    uint32_t prev_tss;
     uint32_t esp0; 
-    uint16_t ss0, ss0_reserved;
+    uint32_t ss0;
     uint32_t esp1;
-    uint16_t ss1, ss1_reserved;
+    uint32_t ss1;
     uint32_t esp2;
-    uint16_t ss2, ss2_reserved;
+    uint32_t ss2;
     uint32_t cr3;
     uint32_t eip;
     uint32_t eflags;
@@ -27,20 +27,22 @@ typedef struct
     uint32_t ebp;
     uint32_t esi;
     uint32_t edi;
-    uint16_t es, es_reserved;
-    uint16_t cs, cs_reserved;
-    uint16_t ss, ss_reserved;
-    uint16_t ds, ds_reserved;
-    uint16_t fs, fs_reserved;
-    uint16_t gs, gs_reserved;
-    uint16_t ldtr, ldtr_reserved;
-    uint16_t iopb_offset_reserved, iopb_offset;
+    uint32_t es;
+    uint32_t cs;
+    uint32_t ss;
+    uint32_t ds;
+    uint32_t fs;
+    uint32_t gs;
+    uint32_t ldt;
+    uint16_t trap;
+    uint16_t iomap_offset;
 } __attribute__((__packed__)) TSS_t;
 
 extern void load_tss(void);
 extern void tss_switch_usermode(void);
 
-void tss_init(uint8_t, uint16_t, uint16_t);
+void tss_init(uint8_t, uint16_t, uint32_t);
+void tss_set_kernel_stack(uint32_t);
 void tss_switch(void);
 
 #endif

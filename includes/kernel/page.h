@@ -26,6 +26,8 @@ extern page_directory_t* kernel_directory;
 
 extern void copy_page_physical(uint32_t, uint32_t);
 
+page_directory_t* clone_directory(page_directory_t*);
+
 void page_fault_handler(registers_t*);
 
 void page_init(void);

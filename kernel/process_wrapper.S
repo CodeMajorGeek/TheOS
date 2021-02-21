@@ -1,4 +1,5 @@
 .globl copy_page_physical
+.globl read_eip
 
 copy_page_physical:
     push %ebx
@@ -26,3 +27,7 @@ copy_page_physical:
     popf
     pop %ebx
     ret
+
+read_eip:
+    pop %eax
+    jmp %eax

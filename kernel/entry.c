@@ -2,12 +2,13 @@
 
 #include <kernel/gdt.h>
 #include <kernel/isr.h>
-#include <kernel/logger.h>
+#include <kernel/tss.h>
+#include <kernel/tty.h>
 #include <kernel/kmem.h>
 #include <kernel/page.h>
-#include <kernel/tty.h>
+#include <kernel/task.h>
+#include <kernel/logger.h>
 #include <kernel/keyboard.h>
-#include <kernel/tss.h>
 
 #include <stdbool.h>
 #include <stdint.h>
@@ -27,17 +28,17 @@ void k_entry(multiboot_info_t* mbt, uint32_t stack)
 
     kmem_init(mbt);
     page_init();
-
+    task_init(stack);
     
     klog(INFO, "Initializing hardware !");
     tty_init();
     keyboard_init();
     klog(INFO, "Done.");
 
-    /*klog(INFO, "Entering un user-mode...");
-    tss_switch();*/
+    klog(INFO, "Entering in user-mode...");
+    tss_switch();
 
-    printf("Welcome to TheOS !\n");
+    // printf("Welcome to TheOS !\n");
 
     while (true)
         __asm__("hlt");

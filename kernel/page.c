@@ -29,7 +29,7 @@ static page_table_t* clone_table(page_table_t* src, uint32_t* phys_addr)
     return table;
 }
 
-static page_directory_t* clone_directory(page_directory_t* src)
+page_directory_t* clone_directory(page_directory_t* src)
 {
     uint32_t phys;
 
@@ -133,7 +133,7 @@ void page_init(void)
     klog(INFO, "Cloning kernel page directory...");
     current_directory = clone_directory(kernel_directory);
     klog(INFO, "Done.");
-    klog(INFO, "Switching to cloned direcotry...");
+    klog(INFO, "Switching to cloned directory...");
     page_switch(current_directory);
     klog(INFO, "Done.");
 }

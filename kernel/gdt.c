@@ -38,8 +38,8 @@ void gdt_init(void)
 
     tss_init(TSS_SEGMENT, 0x10, 0x00);
 
-    gdt_first.limit_size = sizeof(gdt_entries) - 1;
-    gdt_first.base_address = (uint32_t) gdt_entries;
+    gdt_first.limit_size = MAX_GDT_DESC * sizeof(GDT_t) - 1;
+    gdt_first.base_address = (uint32_t) &gdt_entries;
 
     load_gdt((uint32_t) &gdt_first);
     load_tss();

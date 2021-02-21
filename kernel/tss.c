@@ -2,7 +2,7 @@
 
 TSS_t tss_entry;
 
-void tss_init(uint8_t index, uint16_t ss0, uint16_t esp0)
+void tss_init(uint8_t index, uint16_t ss0, uint32_t esp0)
 {
     uint32_t base = (uint32_t) &tss_entry;
     uint32_t size = base + sizeof(TSS_t);
@@ -18,13 +18,13 @@ void tss_init(uint8_t index, uint16_t ss0, uint16_t esp0)
     tss_entry.ss = tss_entry.ds = tss_entry.es = tss_entry.fs = tss_entry.gs = 0x13;
 }
 
+void tss_set_kernel_stack(uint32_t stack)
+{
+    tss_entry.esp0 = stack;
+}
+
 void tss_switch(void)
 {
     // When task implemented, must set kernel stack pointer here !
     tss_switch_usermode();
-}
-
-void test_usermode(void)
-{
-    // __asm__ __volatile__("int $0x80");
 }
