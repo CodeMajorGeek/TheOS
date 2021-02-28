@@ -39,10 +39,8 @@ typedef struct
 } __attribute__((__packed__)) TSS_t;
 
 extern void load_tss(void);
-extern void tss_switch_usermode(void);
 
 void tss_init(uint8_t, uint16_t, uint32_t);
 void tss_set_kernel_stack(uint32_t);
-void tss_switch(void);
 
 #endif

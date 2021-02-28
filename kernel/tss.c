@@ -22,9 +22,3 @@ void tss_set_kernel_stack(uint32_t stack)
 {
     tss_entry.esp0 = stack;
 }
-
-void tss_switch(void)
-{
-    // When task implemented, must set kernel stack pointer here !
-    tss_switch_usermode();
-}

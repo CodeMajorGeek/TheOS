@@ -34,11 +34,9 @@ void k_entry(multiboot_info_t* mbt, uint32_t stack)
     kmem_init(mbt);
     page_init();
     task_init(stack);
-    
-    /* klog(INFO, "Entering in user-mode...");
-    tss_switch();*/
 
-   __asm__ __volatile__("int $0x80");
+    klog(INFO, "Entering in user-mode...");
+    switch_to_user_mode();
 
     printf("Welcome to TheOS !\n");
 

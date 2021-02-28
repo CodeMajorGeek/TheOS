@@ -10,7 +10,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define KERNEL_STACK_SIZE 2048
+#define KERNEL_STACK_SIZE 2048 // Use a 2kb kernel stack.
 
 typedef struct task
 {
@@ -23,6 +23,7 @@ typedef struct task
 } task_t;
 
 extern uint32_t read_eip(void);
+extern void perform_task_switch(uint32_t, uint32_t, uint32_t, uint32_t);
 
 void task_init(uint32_t);
 void task_switch(void);
@@ -30,5 +31,7 @@ void task_move_stack(void*, uint32_t);
 
 int task_fork(void);
 int task_getpid(void);
+void task_switch(void);
+void switch_to_user_mode(void);
 
 #endif

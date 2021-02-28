@@ -50,16 +50,7 @@ void task_switch(void)
     current_directory = current_task->page_directory;
 
     tss_set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
-
-    __asm__ __volatile__("\
-    cli;\
-    mov %0, %%ecx;\
-    mov %1, %%ecx;\
-    mov %2, %%ebp;\
-    mov %3, %%cr3;\
-    mov $0x12345, %%eax;\
-    sti;\
-    jmp *%%ecx" : : "r"(eip), "r"(esp), "r"(ebp), "r"(current_directory->phys_address));
+    perform_task_switch(eip, current_directory->phys_address, ebp, esp);
 }
 
 void task_move_stack(void* new_stack_start, uint32_t size)
@@ -81,12 +72,12 @@ void task_move_stack(void* new_stack_start, uint32_t size)
 
     memcpy((void*) new_stack_pointer, (void*) old_stack_pointer, initial_esp - old_stack_pointer);
 
+    // FIXME: Insanity, have to do remaping.
     for (uint32_t i = (uint32_t) new_stack_start; i > (uint32_t) new_stack_start - size; i -= 4)
     {
-        uint32_t tmp = *(uint32_t*) i; // Page Fault here !
+        uint32_t tmp = *(uint32_t*) i;
         if ((old_stack_pointer < tmp) && (tmp < initial_esp))
         {
-            klog(DEBUG, "Point here !");
             tmp += offset;
             uint32_t* tmp2 = (uint32_t*) i;
             *tmp2 = tmp;
@@ -139,4 +130,26 @@ int task_fork(void)
 int task_getpid(void)
 {
     return current_task->id;
+}
+
+void switch_to_user_mode(void)
+{
+    tss_set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);
+
+    __asm__ __volatile__("\
+                        cli;\
+                        mov $0x23, %ax;\
+                        mov %ax, %ds;\
+                        mov %ax, %es;\
+                        mov %ax, %fs;\
+                        mov %ax, %gs;\
+                        \
+                        mov %esp, %eax;\
+                        pushl $0x23;\
+                        pushl %esp;\
+                        pushf;\
+                        pushl $0x1B;\
+                        push $1f;\
+                        iret;\
+                        1:");
 }
