@@ -149,7 +149,7 @@ void page_switch(page_directory_t* dir)
     __asm__ __volatile__("mov %0, %%cr0":: "r"(cr0));
 }
 
-page_t* page_get(uint32_t address, int make, page_directory_t* dir)
+page_t* page_get(uint32_t address, bool make, page_directory_t* dir)
 {
     address /= 0x1000; // Turn address into index.
 

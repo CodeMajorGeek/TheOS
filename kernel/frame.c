@@ -58,7 +58,7 @@ void frame_alloc(page_t* p, bool is_kernel, bool is_writable)
         }
         set_frame(index * 0x1000);
         p->present = 1;
-        p->rw = is_writable >= 1;
+        p->rw = is_writable == 1;
         p->user = !is_kernel;
         p->frame = index;
     }

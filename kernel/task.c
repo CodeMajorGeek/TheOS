@@ -65,11 +65,11 @@ void task_switch(void)
 void task_move_stack(void* new_stack_start, uint32_t size)
 {
     for (uint32_t i = (uint32_t) new_stack_start; i >= ((uint32_t) new_stack_start - size); i -= 0x1000)
-        frame_alloc(page_get(i, 1, current_directory), false, true);
+        frame_alloc(page_get(i, true, current_directory), false, true);
 
     uint32_t pd_addr;
     __asm__ __volatile__("mov %%cr3, %0" : "=r"(pd_addr));
-    __asm__ __volatile__("mov %0, %%cr3" :: "r"(pd_addr));
+    __asm__ __volatile__("mov %0, %%cr3" : : "r"(pd_addr));
 
     uint32_t old_stack_pointer;
     uint32_t old_base_pointer;
@@ -81,17 +81,17 @@ void task_move_stack(void* new_stack_start, uint32_t size)
 
     memcpy((void*) new_stack_pointer, (void*) old_stack_pointer, initial_esp - old_stack_pointer);
 
-    for (uint32_t i = (uint32_t) new_stack_pointer; i > (uint32_t) new_stack_pointer - size; i-= 4)
+    for (uint32_t i = (uint32_t) new_stack_start; i > (uint32_t) new_stack_start - size; i -= 4)
     {
-        uint32_t tmp = *(uint32_t*) i;
+        uint32_t tmp = *(uint32_t*) i; // Page Fault here !
         if ((old_stack_pointer < tmp) && (tmp < initial_esp))
         {
+            klog(DEBUG, "Point here !");
             tmp += offset;
             uint32_t* tmp2 = (uint32_t*) i;
             *tmp2 = tmp;
         }
     }
-    klog(DEBUG, "POINT");
     __asm__ __volatile__("mov %0, %%esp" : : "r"(new_stack_pointer));
     __asm__ __volatile__("mov %0, %%ebp" : : "r"(new_base_pointer));
 }

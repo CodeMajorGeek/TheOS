@@ -15,7 +15,7 @@ void gdt_set_gate(uint8_t index, uint32_t base, uint32_t limit, uint8_t access, 
     gdt_entries[index].granularity = (limit >> 16) & 0x0F;
 
     /* Setup granularity and access flags. */
-    gdt_entries[index].granularity |= (gran & 0xF0);
+    gdt_entries[index].granularity |= gran & 0xF0;
     gdt_entries[index].access = access;
 }
 

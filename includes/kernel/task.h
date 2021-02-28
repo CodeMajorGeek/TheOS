@@ -8,6 +8,7 @@
 
 #include <stdint.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define KERNEL_STACK_SIZE 2048
 
