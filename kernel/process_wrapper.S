@@ -34,11 +34,11 @@ read_eip:
     jmp %eax
 
 perform_task_switch:
-    cli;
+    cli
     mov 4(%esp), %ecx
     mov 8(%esp), %eax
     mov 12(%esp), %ebp
-    mov 16(%esp), %eax
+    mov 16(%esp), %esp
     mov %eax, %cr3
     mov $0x12345, %eax
     sti

@@ -2,11 +2,11 @@
 
 int putc(int ic)
 {
-#ifdef __THEOS_KERNEL
     char c = (char) ic;
+#ifdef __THEOS_KERNEL
     tty_write(&c, sizeof(c));
 #else
-    // TODO: Implement stdio write sys call.
+    // TODO: Implement another workable stdout buffer.
 #endif
     return ic;
 }

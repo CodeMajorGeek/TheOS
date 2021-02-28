@@ -146,8 +146,13 @@ void switch_to_user_mode(void)
                         \
                         mov %esp, %eax;\
                         pushl $0x23;\
-                        pushl %esp;\
+                        pushl %eax;\
                         pushf;\
+                        \
+                        pop %eax;\
+                        or $0x200, %eax;\
+                        push %eax;\
+                        \
                         pushl $0x1B;\
                         push $1f;\
                         iret;\

@@ -81,8 +81,8 @@ void isr_init(void)
     io_outb(PIC2_DATA, 0x01);
 
     /* Clear mask register. */
-    io_outb(PIC1_DATA, 0xFF);
-    io_outb(PIC2_DATA, 0xFF);
+    io_outb(PIC1_DATA, 0x00);
+    io_outb(PIC2_DATA, 0x00);
 
     /* Setup the IRQs. */
     idt_set_gate(32, (uint32_t) irq0);
