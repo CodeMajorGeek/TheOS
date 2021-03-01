@@ -13,6 +13,8 @@ copy_page_physical:
     and $0x7FFFFFFF, %edx
     mov %edx, %cr0
 
+    mov $1024, %edx
+
 .loop:
     mov (%ebx), %eax
     mov %eax, (%ecx)

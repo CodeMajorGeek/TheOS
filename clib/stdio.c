@@ -6,7 +6,7 @@ int putc(int ic)
 #ifdef __THEOS_KERNEL
     tty_write(&c, sizeof(c));
 #else
-    // TODO: Implement another workable stdout buffer.
+    syscall(0, (uint32_t) &c, 0, 0, 0, 0);
 #endif
     return ic;
 }

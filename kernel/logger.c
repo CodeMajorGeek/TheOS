@@ -2,29 +2,46 @@
 
 void logger_init(void)
 {
+#ifdef __USE_QEMU
     serial_init(SERIAL);
+#endif
+}
+
+void log(uint8_t level, const char* str)
+{
+#ifdef __USE_QEMU
+    serial_puts(SERIAL, str);
+#else
+    puts(str);
+#endif
+    
 }
 
 void klog(uint8_t level, const char* str)
 {
+#ifndef __DEBUG
+    if (level == DEBUG)
+        return;
+#endif
+
     switch (level)
     {
     case 0:
-        serial_puts(SERIAL, "[INFO] ");
+        log(level, "[INFO] ");
         break;
     case 1:
-        serial_puts(SERIAL, "[DEBUG] ");
+        log(level, "[DEBUG] ");
         break;
     case 2:
-        serial_puts(SERIAL, "[WARN] ");
+        log(level, "[WARN] ");
         break;
     case 3:
-        serial_puts(SERIAL, "[ERROR] ");
+        log(level, "[ERROR] ");
         break;
     default:
-        serial_puts(SERIAL, "[FATAL] ");
+        log(level, "[FATAL] ");
         break;
     }
-    serial_puts(SERIAL, str);
-    serial_puts(SERIAL, "\r\n");
+    log(level, str);
+    log(level, "\r\n");
 }

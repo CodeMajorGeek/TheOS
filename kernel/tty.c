@@ -30,8 +30,14 @@ void tty_put_entry_at(unsigned char c, uint8_t color, size_t x, size_t y)
 
 void tty_putc(char c)
 {
-    unsigned char uc = (unsigned char) c;
-    
+    /* TMP: Hugly-looking tty "scrolling" thing... */
+    if (tty_row >= VGA_HEIGHT)
+    {
+        tty_clear();
+        tty_row = 0;
+    }
+
+    unsigned char uc = (unsigned char) c;   
     switch (c)
     {
         case '\n':
@@ -44,10 +50,10 @@ void tty_putc(char c)
             break;
     }
 
-    if (++tty_col == VGA_WIDTH)
+    if (++tty_col >= VGA_WIDTH)
     {
         tty_col = 0;
-        if (++tty_row == VGA_HEIGHT)
+        if (++tty_row >= VGA_HEIGHT)
             tty_row = 0;
     }
 }

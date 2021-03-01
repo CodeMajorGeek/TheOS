@@ -31,7 +31,7 @@ static signed char vmem_header_less_than(void* a, void* b)
     return ((vmem_header_t*) a)->size < ((vmem_header_t*) b)->size;
 }
 
-vmem_heap_t* vcreate_heap(uint32_t start, uint32_t end_addr, uint32_t max, uint8_t supervisor, uint8_t readonly)
+vmem_heap_t* vcreate_heap(uint32_t start, uint32_t end_addr, uint32_t max, bool supervisor, bool readonly)
 {
     vmem_heap_t* heap = (vmem_heap_t*) kmalloc(sizeof(vmem_heap_t));
 
@@ -107,7 +107,7 @@ static uint32_t contract(uint32_t new_size, vmem_heap_t* heap)
     uint32_t index = old_size;
     while (new_size < index)
     {
-        frame_free((page_t*) page_get(heap->start_address + index, 0, kernel_directory));
+        frame_free((page_t*) page_get(heap->start_address + index, false, kernel_directory));
         index -= 0x1000;
     }
     heap->end_address = heap->start_address + new_size;

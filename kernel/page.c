@@ -15,14 +15,14 @@ static page_table_t* clone_table(page_table_t* src, uint32_t* phys_addr)
         if (!src->pages[i].frame)
             continue;
 
-        frame_alloc(&table->pages[i], 0, 0);
+        frame_alloc(&table->pages[i], false, false);
 
         /* Clone the flags from the source to destination. */
-        table->pages[i].present = src->pages[i].present;   
-        table->pages[i].rw = src->pages[i].rw; 
-        table->pages[i].user = src->pages[i].user; 
-        table->pages[i].accessed = src->pages[i].accessed; 
-        table->pages[i].dirty = src->pages[i].dirty;
+        table->pages[i].present = src->pages[i].present >= 1;   
+        table->pages[i].rw = src->pages[i].rw >= 1; 
+        table->pages[i].user = src->pages[i].user >= 1; 
+        table->pages[i].accessed = src->pages[i].accessed >= 1; 
+        table->pages[i].dirty = src->pages[i].dirty >= 1;
 
         copy_page_physical(src->pages[i].frame * 0x1000, table->pages[i].frame * 0x1000); // Physically copy the data across
     }
@@ -32,8 +32,8 @@ static page_table_t* clone_table(page_table_t* src, uint32_t* phys_addr)
 page_directory_t* clone_directory(page_directory_t* src)
 {
     uint32_t phys;
-
     page_directory_t* dir = (page_directory_t*) kmalloc_ap(sizeof(page_directory_t), &phys);
+
     memset(dir, 0, sizeof(page_directory_t));
     
     /* Get offset tables_phys from the start of page_directory. */
@@ -102,7 +102,7 @@ void page_init(void)
 
     /* Map some pages in the kernel heap area. */
     for (int i = VMEM_START; i < VMEM_START + VMEM_INITIAL_SIZE; i += 0x1000)
-        page_get(i, 1, kernel_directory);
+        page_get(i, true, kernel_directory);
     
     /* Set the initial state of the page directory. */
     klog(INFO, "Initializing contents of page directory...");
@@ -110,14 +110,14 @@ void page_init(void)
     while (i < kmem_addr + 0x1000)
     {
         /* Kernel code is readable but not writtable frome userspace. */
-        frame_alloc(page_get(i, 1, kernel_directory), 0, 0);
+        frame_alloc(page_get(i, true, kernel_directory), false, false);
         i += 0x1000;
     }
     klog(INFO, "Done.");
 
     /* Allocate those pages mapped earlier. */
     for (i = VMEM_START; i < VMEM_START + VMEM_INITIAL_SIZE; i += 0x1000)
-        frame_alloc(page_get(i, 1, kernel_directory), 0, 0);
+        frame_alloc(page_get(i, true, kernel_directory), false, false);
 
     /* Enable paging. */
     klog(INFO, "Enabling paging...");
@@ -126,7 +126,7 @@ void page_init(void)
 
     /* Initialize kernel virtual memory. */
     klog(INFO, "Creating kernel heap...");
-    kmem_heap = vcreate_heap(VMEM_START, VMEM_START + VMEM_INITIAL_SIZE, 0xCFFFF000, 0, 0);
+    kmem_heap = vcreate_heap(VMEM_START, VMEM_START + VMEM_INITIAL_SIZE, 0xCFFFF000, false, false);
     klog(INFO, "Done.");
 
     /* Clone the kernel direcotry. */

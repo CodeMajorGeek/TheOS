@@ -47,6 +47,15 @@ void task_switch(void)
     current_task->esp = esp;
     current_task->ebp = ebp;
 
+
+    current_task = current_task->next;
+    if (!current_task)
+        current_task = ready_queue;
+
+    eip = current_task->eip;
+    esp = current_task->esp;
+    ebp = current_task->ebp;
+
     current_directory = current_task->page_directory;
 
     tss_set_kernel_stack(current_task->kernel_stack + KERNEL_STACK_SIZE);

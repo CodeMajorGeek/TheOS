@@ -3,6 +3,8 @@
 
 #ifdef __THEOS_KERNEL
 #include <kernel/tty.h>
+#else
+#include <sys/syscall.h>
 #endif
 
 #include <limits.h>

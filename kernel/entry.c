@@ -12,15 +12,17 @@
 #include <kernel/logger.h>
 #include <kernel/keyboard.h>
 
+#include <sys/syscall.h>
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 
-void k_entry(multiboot_info_t* mbt, uint32_t stack)
+int k_entry(multiboot_info_t* mbt, uint32_t stack)
 {
     gdt_init();
     isr_init();
+    tty_init();
     logger_init();
 
     if (mbt->mods_count > 0)
@@ -33,14 +35,16 @@ void k_entry(multiboot_info_t* mbt, uint32_t stack)
     task_init(stack);
 
     klog(INFO, "Initializing hardware !");
-    tty_init();
     timer_init();
     keyboard_init();
     klog(INFO, "Done.");
 
+    printf("Welcome to TheOS !\n");
+
     klog(INFO, "Entering in user-mode...");
     switch_to_user_mode();
-    klog(INFO, "Done.");
 
-    for (;;); // Endless loop.
+    syscall(0, (uint32_t) &"In user-mode with syscall !!!\n", 0, 0, 0, 0);
+
+    for (;;);
 }

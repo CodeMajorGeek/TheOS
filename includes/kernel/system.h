@@ -55,8 +55,8 @@ typedef struct
     uint32_t start_address;
     uint32_t end_address;
     uint32_t max_address;
-    uint8_t supervisor;
-    uint8_t readonly;
+    bool supervisor;
+    bool readonly;
 } vmem_heap_t;
 
 #endif
