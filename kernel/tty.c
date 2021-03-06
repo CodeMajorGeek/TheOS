@@ -45,6 +45,9 @@ void tty_putc(char c)
         case '\r':
             tty_col = 0;
             return;
+        case '\t':
+            tty_col += 4;
+            return;
         default:
             tty_put_entry_at(uc, tty_color, tty_col, tty_row);
             break;

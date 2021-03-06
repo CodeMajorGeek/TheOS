@@ -5,12 +5,12 @@ uint32_t kmem_addr = (uint32_t) &end;
 uint32_t kmem_memtotal = 0;
 vmem_heap_t* kmem_heap = 0;
 
-uint32_t kmalloc_i(uint32_t size, int align, uint32_t* phys)
+uint32_t kmalloc_i(uint32_t size, bool align, uint32_t* phys)
 {
-    if (kmem_heap)
+    if (kmem_heap != 0)
     {
-        void* address = vmalloc(size, (uint8_t) align, kmem_heap);
-        if (phys)
+        void* address = vmalloc(size, align, kmem_heap);
+        if (phys != 0)
         {
             page_t* p = page_get((uint32_t) address, 0, kernel_directory);
             *phys = p->frame * 0x1000 + ((uint32_t) address & 0xFFF);
@@ -18,7 +18,7 @@ uint32_t kmalloc_i(uint32_t size, int align, uint32_t* phys)
         return (uint32_t) address;
     }
 
-    if (align == 1 && (kmem_addr && 0xFFFFF000))
+    if (align && (kmem_addr && 0xFFFFF000))
     {
         /* Align the address. */
         kmem_addr &= 0xFFFFF000;
@@ -26,10 +26,8 @@ uint32_t kmalloc_i(uint32_t size, int align, uint32_t* phys)
     }
 
     if (phys)
-    {
         *phys = kmem_addr;
-    }
-
+    
     uint32_t ret = kmem_addr;
     kmem_addr += size;
     return ret;
@@ -37,22 +35,22 @@ uint32_t kmalloc_i(uint32_t size, int align, uint32_t* phys)
 
 uint32_t kmalloc_a(uint32_t size)
 {
-    return kmalloc_i(size, 1, 0);
+    return kmalloc_i(size, true, 0);
 }
 
 uint32_t kmalloc_p(uint32_t size, uint32_t* phys)
 {
-    return kmalloc_i(size, 0, phys);
+    return kmalloc_i(size, false, phys);
 }
 
 uint32_t kmalloc_ap(uint32_t size, uint32_t* phys)
 {
-    return kmalloc_i(size, 1, phys);
+    return kmalloc_i(size, true, phys);
 }
 
 uint32_t kmalloc(uint32_t size)
 {
-    return kmalloc_i(size, 0, 0);
+    return kmalloc_i(size, false, 0);
 }
 
 void kfree(uint32_t pos)

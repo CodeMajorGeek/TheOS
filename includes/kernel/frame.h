@@ -11,8 +11,8 @@
 #define INDEX_FROM_BIT(a)   (a / (8 * 4))
 #define OFFSET_FROM_BIT(a)  (a % (8 * 4))
 
-extern int* frames;
-extern int nframes;
+extern uint32_t* frames;
+extern uint32_t nframes;
 
 void frame_alloc(page_t*, bool, bool);
 void frame_free(page_t*);

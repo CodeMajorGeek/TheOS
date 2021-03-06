@@ -6,6 +6,7 @@
 #include <kernel/frame.h>
 #include <kernel/system.h>
 #include <kernel/logger.h>
+#include <kernel/vfs.h>
 
 #include <stdint.h>
 #include <string.h>

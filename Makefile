@@ -22,7 +22,7 @@ KOBJS = boot/boot.o
 KOBJS += kernel/entry.o kernel/io.o kernel/serial.o kernel/logger.o kernel/tty.o kernel/memory.o kernel/keyboard.o
 KOBJS += kernel/gdt_wrapper.o kernel/gdt.o kernel/interrupt.o kernel/idt_wrapper.o kernel/idt.o kernel/isr.o kernel/tss_wrapper.o kernel/tss.o
 KOBJS += kernel/syscall.o kernel/ordered_array.o kernel/vmem.o kernel/kmem.o kernel/frame.o kernel/process_wrapper.o kernel/page.o kernel/task.o
-KOBJS += kernel/timer.o
+KOBJS += kernel/timer.o kernel/vfs.o kernel/initrd.o
 OBJS = clib/string.o clib/stdlib.o clib/stdio.o clib/sys/syscall.o
 
 DEBUG ?= 0
@@ -45,10 +45,11 @@ clean:
 	$(MAKE) -C clib/ clean;
 	rm -rf *.bin *.o *.log *.iso iso/
 
-TheOS.iso: boot/grub.cfg TheOS.bin
+TheOS.iso: boot/grub.cfg TheOS.bin mkinitrd/initrd.img
 	mkdir -p iso/boot/grub
 	cp $< iso/boot/grub/
 	cp TheOS.bin iso/boot/
+	cp mkinitrd/initrd.img iso/boot/
 	$(GRUB) -o $@ iso
 
 TheOS.bin: TheOS.o

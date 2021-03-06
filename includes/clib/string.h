@@ -14,5 +14,6 @@ size_t strlen(const char*);
 char* strcpy(char*, const char*);
 char* strcat(char*, const char*);
 char* strncat(char*, const char*, size_t);
+int strcmp(const char*, const char*);
 
 #endif

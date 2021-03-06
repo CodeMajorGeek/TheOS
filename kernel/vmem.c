@@ -1,6 +1,6 @@
 #include <kernel/vmem.h>
 
-static signed int find_smallest_hole(uint32_t size, uint8_t page_align, vmem_heap_t* heap)
+static signed int find_smallest_hole(uint32_t size, bool page_align, vmem_heap_t* heap)
 {
     /* Find smallest hole that fit. */
     uint32_t iterator = 0;
@@ -11,7 +11,7 @@ static signed int find_smallest_hole(uint32_t size, uint8_t page_align, vmem_hea
         {
             uint32_t location = (uint32_t) header;
             signed int offset = 0;
-            if (((location + sizeof(vmem_header_t)) & 0xFFFFF000))
+            if ((location + sizeof(vmem_header_t) & 0xFFFFF000) != 0)
                 offset = 0x1000 - (location + sizeof(vmem_header_t)) % 0x1000;
                 signed int hole_size = (signed int) header->size - offset;
                 if (hole_size >= (signed int) size)
@@ -114,7 +114,7 @@ static uint32_t contract(uint32_t new_size, vmem_heap_t* heap)
     return new_size;
 }
 
-void* vmalloc(uint32_t size, uint8_t page_align, vmem_heap_t* heap)
+void* vmalloc(uint32_t size, bool page_align, vmem_heap_t* heap)
 {
     uint32_t new_size = size + sizeof(vmem_header_t) + sizeof(vmem_footer_t);
 

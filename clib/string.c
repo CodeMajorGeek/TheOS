@@ -78,3 +78,10 @@ char* strncat(char* dest, const char* src, size_t len)
     dest[dest_len + i] = src[i];
     return dest;
 }
+
+int strcmp(const char* first, const char* second)
+{
+    size_t first_len = strlen(first);
+    size_t second_len = strlen(second);
+    return memcmp(first, second, first_len > second_len ? first_len : second_len);
+}

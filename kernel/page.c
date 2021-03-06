@@ -82,12 +82,12 @@ void page_init(void)
     uint8_t sp_buffer[256];
     int index = 0;
     uint32_t memend = kmem_total();
-
+    
     /* Set the frames and frame count. */
     klog(INFO, "Initializing physical frames...");
     nframes = memend / 0x1000;
     frames = (uint32_t*) kmalloc(INDEX_FROM_BIT(nframes));
-    memset(frames, 0, INDEX_FROM_BIT(nframes));
+    memset(frames, 0, INDEX_FROM_BIT(nframes)); // this memset overwrite initrd...
     sprintf(sp_buffer, "Done (%d).", nframes);
     klog(INFO, sp_buffer);
 

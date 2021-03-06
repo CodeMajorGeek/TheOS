@@ -16,7 +16,7 @@
 #define VMEM_MIN_SIZE       0x70000
 
 vmem_heap_t* vcreate_heap(uint32_t, uint32_t, uint32_t, bool, bool);
-void* vmalloc(uint32_t, uint8_t, vmem_heap_t*);
+void* vmalloc(uint32_t, bool, vmem_heap_t*);
 void vfree(void*, vmem_heap_t*);
 
 
