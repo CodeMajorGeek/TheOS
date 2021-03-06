@@ -1,5 +1,5 @@
 CC = gcc -m32
-CPPFLAGS = -nostdinc -P
+CPPFLAGS = -nostdinc
 CFLAGS = -msoft-float -O -fno-stack-protector -fno-exceptions -fno-builtin -fno-pie -g -ffreestanding
 CPPFLAGS = -nostdinc
 

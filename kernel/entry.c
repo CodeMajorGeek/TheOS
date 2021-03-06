@@ -20,25 +20,32 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int k_entry(multiboot_info_t* mbt, uint32_t stack)
+int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
 {
-    gdt_init();
-    isr_init();
     tty_init();
     logger_init();
+    if (magic != MULTIBOOT_BOOTLOADER_MAGIC)
+    {
+        klog(FATAL, "Invalide multiboot magic number !");
+        abort();
+    }
+    gdt_init();
+    isr_init();
+    
+    multiboot_info_t* mbi = (multiboot_info_t*) addr;
 
-    if (mbt->mods_count <= 0)
+    if (mbi->mods_count <= 0)
     {
         klog(FATAL, "Multiboot can't find initrd module !");
         abort();
     }
 
     klog(INFO, "Initializing initrd...");
-    uint32_t initrd_location = *((uint32_t*) mbt->mods_addr);
+    uint32_t initrd_location = *((uint32_t*) mbi->mods_addr);
     fs_root = initrd_init(initrd_location);
     klog(INFO, "Done.");
 
-    kmem_init(mbt);
+    kmem_init(mbi);
     page_init();
     task_init(stack);   
 

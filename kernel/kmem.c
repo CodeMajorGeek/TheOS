@@ -66,11 +66,11 @@ uint32_t kmem_total(void)
 
 void kmem_init(multiboot_info_t* mbt)
 {
-    multiboot_memory_map_t* mmap = (multiboot_memory_map_t*) mbt->mmam_addr;
-    while ((uint32_t) mmap < mbt->mmam_addr + mbt->mmap_length)
+    multiboot_memory_map_t* mmap = (multiboot_memory_map_t*) mbt->mmap_addr;
+    while ((uint32_t) mmap < mbt->mmap_addr + mbt->mmap_length)
     {
-        if ((uint32_t) mmap->base_addr + (uint32_t) mmap->length > kmem_memtotal)
-            kmem_memtotal = (uint32_t) mmap->base_addr + (uint32_t) mmap->length;
+        if ((uint32_t) mmap->addr + (uint32_t) mmap->len > kmem_memtotal)
+            kmem_memtotal = (uint32_t) mmap->addr + (uint32_t) mmap->len;
 
         mmap = (multiboot_memory_map_t*) ((uint32_t) mmap + mmap->size + sizeof(uint32_t));
     }
