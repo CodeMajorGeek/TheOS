@@ -21,7 +21,6 @@
 #define HEXADECIMAL 16
 
 int putc(int);
-static bool print(const char*, size_t, bool);
 
 int printf(const char* __restrict, ...);
 int puts(const char*);

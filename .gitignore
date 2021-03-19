@@ -3,5 +3,12 @@
 *.bin
 *.log
 *.iso
+.tar.*
+
+TheCLib
 
 iso/**
+
+cross-compiler/gcc/**
+cross-compiler/binutils/**
+cross-compiler/theos-i686/**

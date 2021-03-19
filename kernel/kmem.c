@@ -12,7 +12,7 @@ uint32_t kmalloc_i(uint32_t size, bool align, uint32_t* phys)
         void* address = vmalloc(size, align, kmem_heap);
         if (phys != 0)
         {
-            page_t* p = page_get((uint32_t) address, 0, kernel_directory);
+            page_t* p = page_get((uint32_t) address, false, kernel_directory);
             *phys = p->frame * 0x1000 + ((uint32_t) address & 0xFFF);
         }
         return (uint32_t) address;
@@ -64,15 +64,15 @@ uint32_t kmem_total(void)
     return kmem_memtotal;
 }
 
-void kmem_init(multiboot_info_t* mbt)
+void kmem_init(multiboot_info_t* mbi)
 {
-    multiboot_memory_map_t* mmap = (multiboot_memory_map_t*) mbt->mmap_addr;
-    while ((uint32_t) mmap < mbt->mmap_addr + mbt->mmap_length)
+    multiboot_memory_map_t* mmap = (multiboot_memory_map_t*) mbi->mmap_addr;
+    while ((uint32_t) mmap < mbi->mmap_addr + mbi->mmap_length)
     {
         if ((uint32_t) mmap->addr + (uint32_t) mmap->len > kmem_memtotal)
             kmem_memtotal = (uint32_t) mmap->addr + (uint32_t) mmap->len;
 
         mmap = (multiboot_memory_map_t*) ((uint32_t) mmap + mmap->size + sizeof(uint32_t));
     }
-    kmem_addr += mbt->mods_count * sizeof(uint32_t); // Adjust kmem_addr for multiboot informations.
+    kmem_addr += mbi->mods_count * sizeof(uint32_t); // Adjust kmem_addr for multiboot informations.
 }

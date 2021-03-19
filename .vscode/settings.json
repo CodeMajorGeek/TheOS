@@ -15,6 +15,7 @@
         "io.h": "c",
         "page.h": "c",
         "typeinfo": "c",
-        "vfs.h": "c"
+        "vfs.h": "c",
+        "system.h": "c"
     }
 }

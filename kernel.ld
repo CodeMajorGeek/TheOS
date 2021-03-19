@@ -24,6 +24,7 @@ SECTIONS
         *(COMMON)
         *(.bss)
     }
-
     end = .;
+
+    . = 1M;
 }

@@ -1,18 +1,19 @@
-CC = gcc -m32
-CPPFLAGS = -nostdinc
-CFLAGS = -msoft-float -O -fno-stack-protector -fno-exceptions -fno-builtin -fno-pie -g -ffreestanding
-CPPFLAGS = -nostdinc
+CROSS_PATH = ./cross-compiler/theos-i686/bin/
 
-GAS = as --32
+CC = $(CROSS_PATH)i686-elf-gcc
+CPPFLAGS = 
+CFLAGS = -msoft-float -O -fno-stack-protector -ffreestanding
 
-LD = ld -m elf_i386
+GAS = $(CROSS_PATH)i686-elf-as
 
-OBJCPY = objcopy
+LD = $(CROSS_PATH)i686-elf-ld
+
+OBJCPY = $(CROSS_PATH)i686-elf-objcopy
 
 GRUB = grub-mkrescue
 GRUB_CHECK = grub-file --is-x86-multiboot
 
-AR = ar
+AR = $(CROSS_PATH)i686-elf-ar
 
 DEFINES = -Iincludes/ -Iincludes/clib/
 
@@ -30,7 +31,7 @@ ifeq ($(DEBUG), 1)
 	CPPFLAGS += -D__DEBUG
 endif
 
-all: clean TheOS.iso
+all: clean toolchain TheOS.iso
 
 run: CPPFLAGS += -D__USE_QEMU
 run: all
@@ -43,7 +44,15 @@ clean:
 	$(MAKE) -C boot/ clean;
 	$(MAKE) -C kernel/ clean;
 	$(MAKE) -C clib/ clean;
-	rm -rf *.bin *.o *.log *.iso iso/
+	rm -rf *.bin *.o *.log *.iso TheCLib iso/
+
+
+toolchain: clean-toolchain TheCLib clib/crt0.o
+	cp TheCLib $(CROSS_PATH)../lib/
+	cp clib/crt0.o $(CROSS_PATH)../lib/
+
+clean-toolchain:
+	rm -rf $(CROSS_PATH)../lib/*
 
 TheOS.iso: boot/grub.cfg TheOS.bin mkinitrd/initrd.img
 	mkdir -p iso/boot/grub
@@ -57,10 +66,10 @@ TheOS.bin: TheOS.o
 	$(GRUB_CHECK) $@
 
 TheOS.o: CPPFLAGS += -D__THEOS_KERNEL
-TheOS.o: kernel.ld $(KOBJS) CLib.o
-	$(LD) -T $< -o $@ $(KOBJS) CLib.o
+TheOS.o: kernel.ld $(KOBJS) TheCLib
+	$(LD) -T $< -o $@ $(KOBJS) TheCLib
 
-CLib.o: $(OBJS)
+TheCLib: $(OBJS)
 	$(AR) rcs $@ $^
 
 %.o: %.S
