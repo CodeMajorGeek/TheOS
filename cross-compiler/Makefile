@@ -14,10 +14,12 @@ uninstall: clean
 	rm -rf $(PREFIX)
 
 clean:
-	rm -rf binutils/ gcc/
+	rm -rf binutils/ gcc/ $(BINUTILS_SRC) $(GCC_SRC)
+
+$(BINUTILS_SRC):
+	wget https://ftp.gnu.org/gnu/binutils/$(BINUTILS_SRC)
 
 binutils/: $(BINUTILS_SRC)
-	wget https://ftp.gnu.org/gnu/binutils/$(BINUTILS_SRC)
 	mkdir $@
 	$(TAR) xf $< -C $@ --strip-components 1
 	cd $@; \
@@ -25,8 +27,10 @@ binutils/: $(BINUTILS_SRC)
 	$(MAKE) -C $@
 	$(MAKE) -C $@ install
 
-gcc/: $(GCC_SRC)
+$(GCC_SRC):
 	wget https://ftp.gnu.org/gnu/gcc/gcc-10.2.0/$(GCC_SRC)
+
+gcc/: $(GCC_SRC)
 	mkdir -p $@build
 	$(TAR) xf $< -C $@ --strip-components 1
 	cd $@; \
