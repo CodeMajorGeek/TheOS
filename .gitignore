@@ -1,14 +1,22 @@
+*
+!*.*
+!*/
+!Makefile
+!LICENSE
+!mkinitrd/**
+
 *.o
+*.a
+*.so
 *.d
-*.bin
-*.log
-*.iso
-.tar.*
 
-TheCLib
+*.config
+*.includes
+*.cflags
+*.cxxflags
 
-iso/**
-
-cross-compiler/gcc/**
-cross-compiler/binutils/**
-cross-compiler/theos-i686/**
+Build
+Toolchain/Tarballs
+Toolchain/Build
+Toolchain/Local
+.vscode
