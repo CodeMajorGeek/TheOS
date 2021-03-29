@@ -260,11 +260,11 @@ pushd "$DIR/Build/$ARCH"
             done
             unset SRC_ROOT
         popd
-
-        echo "XXX build libstdc++"
-        "$MAKE" -j "$MAKEJOBS" all-target-libstdc++-v3 || exit 1
-        echo "XXX install libstdc++"
-        "$MAKE" install-target-libstdc++-v3 || exit 1
+        
+        # echo "XXX build libstdc++"
+        # "$MAKE" -j "$MAKEJOBS" all-target-libstdc++-v3 || exit 1
+        # echo "XXX install libstdc++"
+        # "$MAKE" install-target-libstdc++-v3 || exit 1
 
         if [ "$(uname -s)" = "OpenBSD" ]; then
             cd "$DIR/Local/${ARCH}/libexec/gcc/$TARGET/$GCC_VERSION" && ln -sf liblto_plugin.so.0.0 liblto_plugin.so

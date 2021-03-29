@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 project(TheOS C CXX ASM)
 
+include(${CMAKE_SOURCE_DIR}/Meta/CMake/utils.cmake)
+
 if(NOT "${CMAKE_BUILD_TYPE}" STREQUAL "")
   message(FATAL
     ": Don't use CMAKE_BUILD_TYPE when building TheOS.\n"
