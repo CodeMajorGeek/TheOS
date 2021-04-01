@@ -31,7 +31,7 @@ static dirent_t* initrd_readdir(fs_node_t* node, uint32_t index)
         return &dirent;
     }
 
-    if (index - 1 >= nroot_nodes)
+    if ((int) (index - 1) >= nroot_nodes)
         return 0;
 
     strcpy(dirent.name, root_nodes[index - 1].name);
@@ -92,7 +92,7 @@ fs_node_t* initrd_init(uint32_t location)
         abort();
     }
 
-    for (int i = 0; i < initrd_header->nfiles; i++)
+    for (int i = 0; i < (int) initrd_header->nfiles; i++)
     {
         file_headers[i].offset += location;
         strcpy(root_nodes[i].name, (const char*) &file_headers[i].name);

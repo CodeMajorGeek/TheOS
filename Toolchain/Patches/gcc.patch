@@ -6224,3 +6224,4 @@ diff -ruN a/libstdc++-v3/crossconfig.m4 b/libstdc++-v3/crossconfig.m4
    arm*-*-symbianelf*)
      # This is a freestanding configuration; there is nothing to do here.
      ;;
+

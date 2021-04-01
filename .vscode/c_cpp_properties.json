@@ -1,8 +1,8 @@
 {
     "env": {
         "includePaths":[
-            "${workspaceFolder}/includes/",
-            "${workspaceFolder}/includes/clib/"
+            "${workspaceFolder}/Includes/",
+            "${workspaceFolder}/Includes/LibC/"
         ]
     },
     "configurations": [

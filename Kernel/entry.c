@@ -46,7 +46,6 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     uint32_t initrd_location = *((uint32_t*) mbi->mods_addr);
     fs_root = initrd_init(initrd_location);
     klog(INFO, "Done.");
-
     
     puts("================================================================================\n");
     puts("Before going to user-mode, let's test VFS:\n");
@@ -63,7 +62,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
         else
         {
             char buf[fsnode->length];
-            uint32_t s = read_fs(fsnode, 0, fsnode->length, buf);
+            uint32_t s = read_fs(fsnode, 0, fsnode->length, (uint8_t*) buf);
             printf("\tContents of size %d-%d: \"%s\".\n", s, fsnode->length, buf);
         }
     }
