@@ -50,6 +50,11 @@ add_custom_target(setup-run
     USES_TERMINAL
 )
 
+include_directories(.)
+include_directories(${CMAKE_BINARY_DIR})
+
+add_link_options(--sysroot ${CMAKE_BINARY_DIR}/Root)
+
 include_directories(Includes)
 include_directories(Includes/LibC)
 
