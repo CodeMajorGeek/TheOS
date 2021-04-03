@@ -3,31 +3,31 @@ set(KERNEL_ARCH i386)
 set(KERNEL_SOURCES
     entry.c
     Boot/boot.S
-    gdt.c
-    gdt_wrapper.S
-    idt.c
-    idt_wrapper.S
-    initrd.c
-    interrupt.S
-    io.c
-    isr.c
-    keyboard.c
-    logger.c
-    memory.c
-    ordered_array.c
-    page.c
-    process_wrapper.S
-    serial.c
-    syscall.c
-    task.c
-    timer.c
-    tss.c
-    tss_wrapper.S
-    tty.c
-    vfs.c
-    kmem.c
-    vmem.c
-    frame.c
+    CPU/gdt.c
+    CPU/gdt_wrapper.S
+    CPU/idt.c
+    CPU/idt_wrapper.S
+    FileSystem/initrd.c
+    CPU/interrupt.S
+    CPU/io.c
+    CPU/isr.c
+    Devices/keyboard.c
+    Utils/logger.c
+    Memory/memory.c
+    Utils/ordered_array.c
+    Memory/page.c
+    Process/process_wrapper.S
+    CPU/serial.c
+    Process/syscall.c
+    Process/task.c
+    CPU/timer.c
+    CPU/tss.c
+    CPU/tss_wrapper.S
+    Devices/tty.c
+    FileSystem/vfs.c
+    Memory/kmem.c
+    Memory/vmem.c
+    Memory/frame.c
 )
 
 set(LIBC_SOURCES

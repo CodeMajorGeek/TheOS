@@ -2,7 +2,7 @@
 #define _CLIB_STDIO_H
 
 #ifdef __THEOS_KERNEL
-#include <Kernel/tty.h>
+#include <Kernel/Devices/tty.h>
 #else
 #include <sys/syscall.h>
 #endif

@@ -27,6 +27,7 @@
         "memory.h": "c",
         "ordered_array.h": "c",
         "vmem.h": "c",
-        "serial.h": "c"
+        "serial.h": "c",
+        "keyboard.h": "c"
     }
 }

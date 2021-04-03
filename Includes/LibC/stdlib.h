@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #ifdef __THEOS_KERNEL
-#include <Kernel/logger.h>
+#include <Kernel/Utils/logger.h>
 #endif
 
 __attribute__((__noreturn__)) void abort(void);
