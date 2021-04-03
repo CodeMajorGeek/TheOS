@@ -33,7 +33,7 @@ copy_page_physical:
 
 read_eip:
     pop %eax
-    jmp %eax
+    jmp *%eax
 
 perform_task_switch:
     cli

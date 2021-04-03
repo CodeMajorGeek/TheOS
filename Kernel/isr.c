@@ -1,4 +1,4 @@
-#include <kernel/isr.h>
+#include <Kernel/isr.h>
 
 isr_t interrupt_handlers[MAX_ENTRIES];
 

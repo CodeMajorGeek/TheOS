@@ -1,18 +1,18 @@
-#include <boot/multiboot.h>
+#include <Boot/multiboot.h>
 
-#include <kernel/io.h>
-#include <kernel/gdt.h>
-#include <kernel/isr.h>
-#include <kernel/tss.h>
-#include <kernel/tty.h>
-#include <kernel/vfs.h>
-#include <kernel/kmem.h>
-#include <kernel/page.h>
-#include <kernel/task.h>
-#include <kernel/timer.h>
-#include <kernel/logger.h>
-#include <kernel/initrd.h>
-#include <kernel/keyboard.h>
+#include <Kernel/io.h>
+#include <Kernel/gdt.h>
+#include <Kernel/isr.h>
+#include <Kernel/tss.h>
+#include <Kernel/tty.h>
+#include <Kernel/vfs.h>
+#include <Kernel/kmem.h>
+#include <Kernel/page.h>
+#include <Kernel/task.h>
+#include <Kernel/timer.h>
+#include <Kernel/logger.h>
+#include <Kernel/initrd.h>
+#include <Kernel/keyboard.h>
 
 #include <sys/syscall.h>
 #include <stdbool.h>

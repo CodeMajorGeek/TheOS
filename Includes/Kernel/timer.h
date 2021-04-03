@@ -1,9 +1,9 @@
 #ifndef _KERNEL_TIMER_H
 #define _KERNEL_TIMER_H
 
-#include <kernel/task.h>
-#include <kernel/isr.h>
-#include <kernel/io.h>
+#include <Kernel/task.h>
+#include <Kernel/isr.h>
+#include <Kernel/io.h>
 
 #include <stdint.h>
 

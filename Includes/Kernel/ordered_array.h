@@ -1,8 +1,8 @@
 #ifndef _KERNEL_ORDERED_ARRAY_H
 #define _KERNEL_ORDERED_ARRAY_H
 
-#include <kernel/kmem.h>
-#include <kernel/system.h>
+#include <Kernel/kmem.h>
+#include <Kernel/system.h>
 
 #include <stdbool.h>
 #include <stdint.h>

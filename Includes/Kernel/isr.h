@@ -1,12 +1,12 @@
 #ifndef _KERNEL_ISR_H
 #define _KERNEL_ISR_H
 
-#include <kernel/io.h>
-#include <kernel/idt.h>
-#include <kernel/page.h>
-#include <kernel/system.h>
-#include <kernel/logger.h>
-#include <kernel/syscall.h>
+#include <Kernel/io.h>
+#include <Kernel/idt.h>
+#include <Kernel/page.h>
+#include <Kernel/system.h>
+#include <Kernel/logger.h>
+#include <Kernel/syscall.h>
 
 #include <stdint.h>
 #include <stdlib.h>

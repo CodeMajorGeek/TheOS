@@ -1,4 +1,4 @@
-#include <kernel/frame.h>
+#include <Kernel/frame.h>
 
 uint32_t* frames;
 uint32_t nframes;

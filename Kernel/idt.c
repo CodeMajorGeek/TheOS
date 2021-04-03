@@ -1,4 +1,4 @@
-#include <kernel/idt.h>
+#include <Kernel/idt.h>
 
 IDT_t idt_entries[MAX_ENTRIES];
 IDT_PTR_t idt_first;

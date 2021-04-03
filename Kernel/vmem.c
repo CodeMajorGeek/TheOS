@@ -1,4 +1,4 @@
-#include <kernel/vmem.h>
+#include <Kernel/vmem.h>
 
 static signed int find_smallest_hole(uint32_t size, bool page_align, vmem_heap_t* heap)
 {

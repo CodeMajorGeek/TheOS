@@ -1,7 +1,7 @@
 #ifndef _KERNEL_GDT_H
 #define _KERNEL_GDT_H
 
-#include <kernel/tss.h>
+#include <Kernel/tss.h>
 
 #include <stdint.h>
 

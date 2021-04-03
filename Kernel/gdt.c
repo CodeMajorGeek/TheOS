@@ -1,4 +1,4 @@
-#include <kernel/gdt.h>
+#include <Kernel/gdt.h>
 
 GDT_t gdt_entries[MAX_GDT_DESC];
 GDT_PTR_t gdt_first;

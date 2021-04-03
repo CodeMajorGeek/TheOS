@@ -1,8 +1,8 @@
 #ifndef _KERNEL_INITRD_H
 #define _KERNEL_INITRD_H
 
-#include <kernel/vfs.h>
-#include <kernel/kmem.h>
+#include <Kernel/vfs.h>
+#include <Kernel/kmem.h>
 
 #include <stdint.h>
 #include <string.h>

@@ -1,4 +1,4 @@
-#include <kernel/memory.h>
+#include <Kernel/memory.h>
 
 short memory_CMOS_get_size(void)
 {

@@ -1,8 +1,8 @@
 #ifndef _KERNEL_FRAME_H
 #define _KERNEL_FRAME_H
 
-#include <kernel/system.h>
-#include <kernel/logger.h>
+#include <Kernel/system.h>
+#include <Kernel/logger.h>
 
 #include <stdbool.h>
 #include <stdlib.h>

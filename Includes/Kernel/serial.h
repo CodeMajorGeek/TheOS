@@ -1,7 +1,7 @@
 #ifndef _KERNEL_SERIAL_H
 #define _KERNEL_SERIAL_H
 
-#include <kernel/io.h>
+#include <Kernel/io.h>
 
 #include <stdint.h>
 #include <stdbool.h>

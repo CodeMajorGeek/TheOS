@@ -1,12 +1,12 @@
 #ifndef _KERNEL_PAGE_H
 #define _KERNEL_PAGE_H
 
-#include <kernel/kmem.h>
-#include <kernel/vmem.h>
-#include <kernel/frame.h>
-#include <kernel/system.h>
-#include <kernel/logger.h>
-#include <kernel/vfs.h>
+#include <Kernel/kmem.h>
+#include <Kernel/vmem.h>
+#include <Kernel/frame.h>
+#include <Kernel/system.h>
+#include <Kernel/logger.h>
+#include <Kernel/vfs.h>
 
 #include <stdint.h>
 #include <string.h>

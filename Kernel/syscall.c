@@ -1,4 +1,4 @@
-#include <kernel/syscall.h>
+#include <Kernel/syscall.h>
 
 void* SYSCALLS[MAX_SYSCALLS] = 
 {

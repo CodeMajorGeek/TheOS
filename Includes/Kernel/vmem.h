@@ -1,10 +1,10 @@
 #ifndef _KERNEL_VMEM_H
 #define _KERNEL_VMEM_H
 
-#include <kernel/ordered_array.h>
-#include <kernel/frame.h>
-#include <kernel/system.h>
-#include <kernel/kmem.h>
+#include <Kernel/ordered_array.h>
+#include <Kernel/frame.h>
+#include <Kernel/system.h>
+#include <Kernel/kmem.h>
 
 #include <stdbool.h>
 #include <stdint.h>

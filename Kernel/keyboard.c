@@ -1,4 +1,4 @@
-#include <kernel/keyboard.h>
+#include <Kernel/keyboard.h>
 
 static void keyboard_callback(registers_t* regs)
 {

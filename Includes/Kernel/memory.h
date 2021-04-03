@@ -1,7 +1,7 @@
 #ifndef _KERNEL_MEMORY_H
 #define _KERNEL_MEMORY_H
 
-#include <kernel/io.h>
+#include <Kernel/io.h>
 
 #include <stdint.h>
 

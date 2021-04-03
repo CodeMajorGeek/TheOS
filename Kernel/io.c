@@ -1,4 +1,4 @@
-#include <kernel/io.h>
+#include <Kernel/io.h>
 
 void io_outb(uint16_t port, uint8_t value)
 {

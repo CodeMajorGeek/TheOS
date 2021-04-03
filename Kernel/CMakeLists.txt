@@ -52,5 +52,5 @@ add_compile_definitions(__USE_QEMU)
 add_executable(Kernel ${SOURCES})
 set_target_properties(Kernel PROPERTIES LINK_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/kernel.ld)
 
-theos_install_headers(kernel)
-theos_install_sources(kernel)
+theos_install_headers(Kernel)
+theos_install_sources(Kernel)

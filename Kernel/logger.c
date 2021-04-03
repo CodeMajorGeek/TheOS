@@ -1,4 +1,4 @@
-#include <kernel/logger.h>
+#include <Kernel/logger.h>
 
 void logger_init(void)
 {

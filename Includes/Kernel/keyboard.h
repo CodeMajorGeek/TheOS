@@ -1,8 +1,8 @@
 #ifndef _KERNEL_KEYBOARD_H
 #define _KERNEL_KEYBOARD_H
 
-#include <kernel/isr.h>
-#include <kernel/io.h>
+#include <Kernel/isr.h>
+#include <Kernel/io.h>
 
 #include <stdio.h>
 

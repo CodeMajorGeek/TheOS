@@ -1,4 +1,4 @@
-#include <kernel/task.h>
+#include <Kernel/task.h>
 
 task_t* current_task;
 task_t* ready_queue;

@@ -1,7 +1,7 @@
 #ifndef _KERNEL_SYSCALL_H
 #define _KERNEL_SYSCALL_H
 
-#include <kernel/system.h>
+#include <Kernel/system.h>
 
 #include <stdio.h>
 

@@ -16,6 +16,17 @@
         "page.h": "c",
         "typeinfo": "c",
         "vfs.h": "c",
-        "system.h": "c"
+        "system.h": "c",
+        "gdt.h": "c",
+        "tss.h": "c",
+        "kmem.h": "c",
+        "task.h": "c",
+        "timer.h": "c",
+        "initrd.h": "c",
+        "frame.h": "c",
+        "memory.h": "c",
+        "ordered_array.h": "c",
+        "vmem.h": "c",
+        "serial.h": "c"
     }
 }

@@ -1,4 +1,4 @@
-#include <kernel/timer.h>
+#include <Kernel/timer.h>
 
 uint32_t ticks = 0;
 

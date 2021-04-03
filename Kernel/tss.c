@@ -1,4 +1,4 @@
-#include <kernel/tss.h>
+#include <Kernel/tss.h>
 
 TSS_t tss_entry;
 

@@ -1,8 +1,8 @@
 #ifndef _KERNEL_TTY_H
 #define _KERNEL_TTY_H
 
-#include <kernel/vga.h>
-#include <kernel/io.h>
+#include <Kernel/vga.h>
+#include <Kernel/io.h>
 
 #include <stdint.h>
 #include <stddef.h>

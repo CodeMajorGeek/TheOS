@@ -1,4 +1,4 @@
-#include <kernel/kmem.h>
+#include <Kernel/kmem.h>
 
 extern uint32_t end;
 uint32_t kmem_addr = (uint32_t) &end;

@@ -1,4 +1,4 @@
-#include <kernel/serial.h>
+#include <Kernel/serial.h>
 
 bool serial_init(uint16_t serial)
 {

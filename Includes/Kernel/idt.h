@@ -1,7 +1,7 @@
 #ifndef _KERNEL_IDT_H
 #define _KERNEL_IDT_H
 
-#include <kernel/isr.h>
+#include <Kernel/isr.h>
 
 #include <stdint.h>
 

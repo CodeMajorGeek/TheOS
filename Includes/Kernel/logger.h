@@ -2,7 +2,7 @@
 #define _KERNEL_LOGGER_H
 
 #ifdef __USE_QEMU
-#include <kernel/serial.h>
+#include <Kernel/serial.h>
 #else
 #include <stdio.h>
 #endif

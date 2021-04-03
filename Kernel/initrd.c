@@ -1,4 +1,4 @@
-#include <kernel/initrd.h>
+#include <Kernel/initrd.h>
 
 initrd_header_t* initrd_header;
 initrd_file_header_t* file_headers;

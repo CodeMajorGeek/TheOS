@@ -1,11 +1,11 @@
 #ifndef _KERNEL_KMEM_H
 #define _KERNEL_KMEM_H
 
-#include <boot/multiboot.h>
+#include <Boot/multiboot.h>
 
-#include <kernel/vmem.h>
-#include <kernel/kmem.h>
-#include <kernel/page.h>
+#include <Kernel/vmem.h>
+#include <Kernel/kmem.h>
+#include <Kernel/page.h>
 
 #include <stdint.h>
 #include <stdbool.h>

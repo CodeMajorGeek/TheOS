@@ -1,4 +1,4 @@
-#include <kernel/ordered_array.h>
+#include <Kernel/ordered_array.h>
 
 bool standard_lessthan_predicate(type_t a, type_t b)
 {
