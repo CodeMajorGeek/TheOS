@@ -9,6 +9,7 @@
 *.a
 *.so
 *.d
+*.img
 
 *.config
 *.includes
