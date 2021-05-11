@@ -61,9 +61,8 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
             puts("\t(directory).\n");
         else
         {
-            char buf[fsnode->length];
-            uint32_t s = read_fs(fsnode, 0, fsnode->length, (uint8_t*) buf);
-            printf("\tContents of size %d-%d: \"%s\".\n", s, fsnode->length, buf);
+            uint8_t* offset;
+            uint32_t s = read_fs(fsnode, 0, fsnode->length, offset);
         }
     }
 

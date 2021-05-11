@@ -226,7 +226,6 @@ pushd "$DIR/Build/$ARCH"
         if [ "$(uname -s)" = "OpenBSD" ]; then
             perl -pi -e 's/-no-pie/-nopie/g' "$DIR/Tarballs/gcc-$GCC_VERSION/gcc/configure"
         fi
-
         echo "XXX configure gcc and libgcc"
         "$DIR/Tarballs/gcc-$GCC_VERSION/configure" --prefix="$PREFIX" \
                                             --target="$TARGET" \
@@ -238,7 +237,6 @@ pushd "$DIR/Build/$ARCH"
                                             --enable-default-pie \
                                             --enable-lto \
                                             ${TRY_USE_LOCAL_TOOLCHAIN:+"--quiet"} || exit 1
-
         echo "XXX build gcc and libgcc"
         "$MAKE" -j "$MAKEJOBS" all-gcc || exit 1
         if [ "$(uname -s)" = "OpenBSD" ]; then

@@ -79,7 +79,6 @@ static void expand(uint32_t new_size, vmem_heap_t* heap)
     /* Should always be on a page boundary. */
     uint32_t old_size = heap->end_address - heap->start_address;
     uint32_t index = old_size;
-    klog(DEBUG, "INFO444");
     while (index < new_size)
     {
         frame_alloc((page_t*) page_get(heap->start_address + index, 1, kernel_directory), heap->supervisor >= 1, !heap->readonly);

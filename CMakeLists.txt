@@ -3,6 +3,12 @@ project(TheOS C ASM)
 
 include(${CMAKE_SOURCE_DIR}/Meta/CMake/utils.cmake)
 
+set(CMAKE_INSTALL_MESSAGE NEVER)
+
+enable_testing()
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(THEOS_ARCH "i686" CACHE STRING "Target architecture for TheOS.")
 
 set(CMAKE_C_STANDARD 11)
@@ -25,14 +31,26 @@ set(CMAKE_AR ${TOOLCHAIN_PREFIX}ar)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -msoft-float -O -fno-stack-protector -ffreestanding -nostdlib -nostdinc -static")
 
 add_custom_target(run
+    DEPENDS iso
     COMMAND chmod +x ${CMAKE_SOURCE_DIR}/Meta/run.sh
     COMMAND ${CMAKE_SOURCE_DIR}/Meta/run.sh
     USES_TERMINAL
 )
 
 add_custom_target(iso
+    DEPENDS mkinitrd
     COMMAND chmod +x ${CMAKE_SOURCE_DIR}/Meta/iso.sh
     COMMAND ${CMAKE_SOURCE_DIR}/Meta/iso.sh
+    USES_TERMINAL
+)
+
+add_custom_target(image
+    DEPENDS qemu-image
+)
+add_custom_target(qemu-image
+    COMMAND chmod +x ${CMAKE_SOURCE_DIR}/Meta/build-qemu-image.sh
+    COMMAND ${CMAKE_COMMAND} -E env "THEOS_ROOT=${CMAKE_SOURCE_DIR}" "THEOS_ARCH=${THEOS_ARCH}" ${CMAKE_SOURCE_DIR}/Meta/build-qemu-image.sh
+    BYPRODUCTS ${CMAKE_BINARY_DIR}/_disk_image
     USES_TERMINAL
 )
 
@@ -44,6 +62,7 @@ add_custom_target(mkinitrd
 
 add_custom_target(setup-run
     COMMAND ${CMAKE_MAKE_PROGRAM} install
+    COMMAND ${CMAKE_MAKE_PROGRAM} image
     COMMAND ${CMAKE_MAKE_PROGRAM} mkinitrd
     COMMAND ${CMAKE_MAKE_PROGRAM} iso
     COMMAND ${CMAKE_MAKE_PROGRAM} run

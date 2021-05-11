@@ -28,6 +28,7 @@ set(KERNEL_SOURCES
     Memory/kmem.c
     Memory/vmem.c
     Memory/frame.c
+    # FileSystem/ahci.c
 )
 
 set(LIBC_SOURCES

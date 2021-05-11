@@ -11,4 +11,4 @@ mkinitrd: mkinitrd.c
 	chmod +x $@
 
 initrd: mkinitrd
-	./$< text.txt text.txt
+	./$< TheApp TheApp
