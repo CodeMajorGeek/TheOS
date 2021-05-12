@@ -13,6 +13,7 @@
 #include <Kernel/Utils/logger.h>
 #include <Kernel/FileSystem/initrd.h>
 #include <Kernel/Devices/keyboard.h>
+#include <Kernel/FileSystem/elf.h>
 
 #include <sys/syscall.h>
 #include <stdbool.h>
@@ -40,10 +41,15 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
         abort();
     }
 
-    kmem_init(mbi);
-
     klog(INFO, "Initializing initrd...");
     uint32_t initrd_location = *((uint32_t*) mbi->mods_addr);
+    uint32_t initrd_end = *(uint32_t*)(mbi->mods_addr + 4);
+    kmem_addr = initrd_end; // Put memory managment after initrtd to prevent overwrite it.
+
+    kmem_init(mbi);
+    page_init();
+    task_init(stack);
+
     fs_root = initrd_init(initrd_location);
     klog(INFO, "Done.");
     
@@ -63,14 +69,11 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
         {
             uint8_t* offset;
             uint32_t s = read_fs(fsnode, 0, fsnode->length, offset);
+            printf("Loaded at offset: 0x%H\n", elf_load_executable(offset));
         }
     }
 
-    puts("\n================================================================================\n");
-
-    page_init();
-
-    task_init(stack);   
+    puts("\n================================================================================\n");   
 
     klog(INFO, "Initializing hardware...");
     timer_init();
@@ -82,7 +85,8 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     klog(INFO, "Entering in user-mode...");
     switch_to_user_mode();
     
-    syscall(0, (uint32_t) &"In user-mode with syscalls !!!\n", 0, 0, 0, 0);
+    $sys$puts("In user-mode with syscalls !!!\n");
+    $sys$puts("Now let's try to execute TheApp...\n");
 
     for (;;);
 }

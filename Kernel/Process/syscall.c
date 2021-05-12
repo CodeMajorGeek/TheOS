@@ -2,7 +2,8 @@
 
 void* SYSCALLS[MAX_SYSCALLS] = 
 {
-    &puts
+    &puts,
+    &task_fork
 };
 
 void syscall_handler(registers_t* r)

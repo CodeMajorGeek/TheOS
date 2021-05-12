@@ -1,6 +1,6 @@
 #include <Kernel/FileSystem/elf.h>
 
-bool elf_load_executable(uint8_t* offset)
+uint32_t elf_load_executable(uint8_t* offset)
 {
     ELF_header_t* header = (ELF_header_t*) offset;
 
@@ -23,15 +23,31 @@ bool elf_load_executable(uint8_t* offset)
         return FALSE;
     }
 
-    if (header->instruction_set != OPSET_UKNOWN)
+    if (header->instruction_set != OPSET_x86)
     {
         klog(ERROR, "Isn't the good ELF instruction set !");
         return FALSE;
     }
 
     /* Load the ELF file into memory. */
+    uint32_t text_mem_offset = 0;
 
-    ELF_program_header_t* program_header = (ELF_program_header_t*) header->program_header;
+    ELF_program_header_t* program_headers = (ELF_program_header_t*) header->program_header;
+    for (uint16_t i = 0; i < header->program_entry_header_numbers; i++)
+    {
+        ELF_program_header_t program_header = program_headers[i];
+        printf("\tELF section %d: type: %d, size: %d\n", i, program_header.type, program_header.memory_size);
 
-    return TRUE;
+        switch(program_header.type)
+        {
+            case SEGMENT_NULL:
+                break;
+            case SEGMENT_LOAD:
+                text_mem_offset = kmalloc(program_header.memory_size);
+                memcpy(text_mem_offset, program_header.data_offset, program_header.memory_size);
+                break;
+        }
+    }
+        
+    return text_mem_offset;
 }

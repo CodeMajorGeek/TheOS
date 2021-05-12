@@ -25,6 +25,7 @@ set(KERNEL_SOURCES
     CPU/tss_wrapper.S
     Devices/tty.c
     FileSystem/vfs.c
+    FileSystem/elf.c
     Memory/kmem.c
     Memory/vmem.c
     Memory/frame.c

@@ -4,8 +4,8 @@
 #include <Kernel/Utils/logger.h>
 #include <Kernel/Memory/kmem.h>
 
-#include <stdbool.h>
 #include <stdint.h>
+#include <string.h>
 
 #define MAGIC               0x464C457F
 
@@ -45,7 +45,7 @@ typedef struct
     uint8_t endian;
     uint8_t header_version;
     uint8_t OSABI;
-    uint16_t unused;
+    uint64_t unused;
     uint16_t type;
     uint16_t instruction_set;
     uint32_t version;
@@ -73,6 +73,6 @@ typedef struct
     uint32_t alignment;
 } ELF_program_header_t;
 
-bool elf_load_executable(uint8_t*);
+uint32_t elf_load_executable(uint8_t*);
 
 #endif

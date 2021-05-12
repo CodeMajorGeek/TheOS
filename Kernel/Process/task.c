@@ -15,7 +15,7 @@ void task_init(uint32_t stack)
 
     __asm__ __volatile__("cli"); // Disable interrupts.
 
-    task_move_stack((void*) 0xE0000000, 0x2000); // Relocate the stack to know here it is.
+    task_move_stack((void*) 0xE0000000, 0x2000); // Relocate the stack to know where is it.
 
     /* Initialize the first task (kernel one). */
     current_task = ready_queue = (task_t*) kmalloc(sizeof(task_t));
