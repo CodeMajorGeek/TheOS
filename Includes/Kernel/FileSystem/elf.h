@@ -18,7 +18,7 @@
 #define TYPE_CORE           4
 
 #define OPSET_UKNOWN        0
-#define OPSET SPARC         2
+#define OPSET_SPARC         2
 #define OPSET_x86           3
 #define OPSET_MIPS          8
 #define OPSET_POWERPC       0x14

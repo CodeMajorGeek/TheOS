@@ -159,7 +159,7 @@ int printf(const char* restrict format, ...)
 
 int puts(const char* str)
 {
-    return printf("%s", str);
+    return printf("%s\n", str);
 }
 
 char* itoa(int value, char* buf, size_t length, unsigned int base)

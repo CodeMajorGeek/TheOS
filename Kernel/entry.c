@@ -6,6 +6,7 @@
 #include <Kernel/CPU/tss.h>
 #include <Kernel/Devices/tty.h>
 #include <Kernel/FileSystem/vfs.h>
+#include <Kernel/FileSystem/ATAPI.h>
 #include <Kernel/Memory/kmem.h>
 #include <Kernel/Memory/page.h>
 #include <Kernel/Process/task.h>
@@ -13,7 +14,6 @@
 #include <Kernel/Utils/logger.h>
 #include <Kernel/FileSystem/initrd.h>
 #include <Kernel/Devices/keyboard.h>
-#include <Kernel/FileSystem/elf.h>
 
 #include <sys/syscall.h>
 #include <stdbool.h>
@@ -53,7 +53,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     fs_root = initrd_init(initrd_location);
     klog(INFO, "Done.");
     
-    puts("================================================================================\n");
+    puts("================================================================================");
     puts("Before going to user-mode, let's test VFS:\n");
 
     dirent_t* node = 0;
@@ -69,15 +69,19 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
         {
             uint8_t* offset;
             uint32_t s = read_fs(fsnode, 0, fsnode->length, offset);
-            printf("Loaded at offset: 0x%H\n", elf_load_executable(offset));
+            printf("Loaded at offset: 0x%H\n", offset);
         }
     }
 
-    puts("\n================================================================================\n");   
+    puts("\n================================================================================");   
 
     klog(INFO, "Initializing hardware...");
     timer_init();
     keyboard_init();
+    klog(INFO, "Done.");
+
+    klog(INFO, "Initializing storage...");
+    ATAPI_init();
     klog(INFO, "Done.");
 
     puts("Welcome to TheOS !\n");
@@ -86,7 +90,8 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     switch_to_user_mode();
     
     $sys$puts("In user-mode with syscalls !!!\n");
-    $sys$puts("Now let's try to execute TheApp...\n");
+
+
 
     for (;;);
 }

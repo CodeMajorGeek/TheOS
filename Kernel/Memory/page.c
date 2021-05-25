@@ -87,7 +87,6 @@ void page_init(void)
     klog(INFO, "Initializing physical frames...");
     nframes = memend / 0x1000;
     frames = (uint32_t*) kmalloc(INDEX_FROM_BIT(nframes));
-    printf("Frame offset: 0x%H.\n");
     memset(frames, 0, INDEX_FROM_BIT(nframes));
     sprintf(sp_buffer, "Done (%d).", nframes);
     klog(INFO, sp_buffer);

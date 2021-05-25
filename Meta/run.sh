@@ -11,4 +11,5 @@ qemu-system-x86_64 -chardev stdio,id=char0,mux=on,logfile=serial.log,signal=off 
 -cpu $THEOS_QEMU_CPU \
 -smp 2 \
 -device VGA,vgamem_mb=64 \
--drive file=${THEOS_DISK_IMAGE},format=raw,index=0,media=disk -device ich9-ahci -usb -cdrom TheOS.iso
+-drive file=${THEOS_DISK_IMAGE},format=raw,index=1,media=disk -device ich9-ahci -usb \
+-cdrom TheOS.iso
