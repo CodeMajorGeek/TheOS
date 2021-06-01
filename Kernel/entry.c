@@ -6,7 +6,6 @@
 #include <Kernel/CPU/tss.h>
 #include <Kernel/Devices/tty.h>
 #include <Kernel/FileSystem/vfs.h>
-#include <Kernel/FileSystem/ATAPI.h>
 #include <Kernel/Memory/kmem.h>
 #include <Kernel/Memory/page.h>
 #include <Kernel/Process/task.h>
@@ -14,6 +13,7 @@
 #include <Kernel/Utils/logger.h>
 #include <Kernel/FileSystem/initrd.h>
 #include <Kernel/Devices/keyboard.h>
+#include <Kernel/PCI/ide.h>
 
 #include <sys/syscall.h>
 #include <stdbool.h>
@@ -81,17 +81,15 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     klog(INFO, "Done.");
 
     klog(INFO, "Initializing storage...");
-    ATAPI_init();
+    ide_initialize(0x1F0, 0x3F6, 0x170, 0x376, 0x000);
     klog(INFO, "Done.");
 
-    puts("Welcome to TheOS !\n");
+    puts("\nWelcome to TheOS !\n");
 
     klog(INFO, "Entering in user-mode...");
     switch_to_user_mode();
     
     $sys$puts("In user-mode with syscalls !!!\n");
-
-
-
+    
     for (;;);
 }

@@ -24,6 +24,12 @@ static bool print(const char* data, size_t length, bool uppercase)
     return true;
 }
 
+char read(void)
+{
+    
+    return keyboard_wait_scancode();
+}
+
 int printf(const char* restrict format, ...)
 {
     va_list parameters;

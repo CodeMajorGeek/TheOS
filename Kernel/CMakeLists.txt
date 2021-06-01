@@ -25,10 +25,10 @@ set(KERNEL_SOURCES
     CPU/tss_wrapper.S
     Devices/tty.c
     FileSystem/vfs.c
-    FileSystem/ATAPI.c
     Memory/kmem.c
     Memory/vmem.c
     Memory/frame.c
+    PCI/ide.c
 )
 
 set(LIBC_SOURCES

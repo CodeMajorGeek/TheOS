@@ -1,4 +1,4 @@
-#include <Kernel/FileSystem/initrd.h>
+#include <Kernel/FileSystem/vfs.h>
 
 fs_node_t* fs_root = 0;
 

@@ -13,4 +13,6 @@ void timer_init(void);
 
 void timer_phase(uint16_t);
 
+void sleep(uint32_t);
+
 #endif
