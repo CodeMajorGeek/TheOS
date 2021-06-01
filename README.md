@@ -6,7 +6,7 @@ TheOS is an OS written by me (CodeMajorGeek alias Théo Colinmaire).
 - **Add storage support.**
 - **Have a good Clib implementation for future user space.**
 - **Have to change way of moving kernel stack when enabling multitasking (insanity).**
-- **Have a VFS and initial ramdisk system to load the first main not userland program (TheApp).**
+- **Have a VFS and initial ramdisk system to load the first main userland program (TheApp).**
 
 ## Ingoing things:
 - **Kernel programming.**
@@ -24,3 +24,4 @@ TheOS is an OS written by me (CodeMajorGeek alias Théo Colinmaire).
 - **User-mode ring3 support, syscalls (TSSs).**
 - **Memory managment (virtual memory managment, pagging...).**
 - **Multitasking support (tasks).**
+- **PCI IDE Controller support for storage.**
