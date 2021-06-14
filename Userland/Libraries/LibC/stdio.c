@@ -24,10 +24,13 @@ static bool print(const char* data, size_t length, bool uppercase)
     return true;
 }
 
-char read(void)
+int getc(void)
 {
-    
-    return keyboard_wait_scancode();
+#ifdef __THEOS_KERNEL
+    return keyboard_wait_ASCII();
+#else
+    return $sys$getc();
+#endif
 }
 
 int printf(const char* restrict format, ...)

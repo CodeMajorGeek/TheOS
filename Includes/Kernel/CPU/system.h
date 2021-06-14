@@ -59,4 +59,15 @@ typedef struct
     bool readonly;
 } vmem_heap_t;
 
+typedef struct
+{
+    page_t pages[1024];
+} page_table_t;
+
+typedef struct {
+    page_table_t* tables[1024]; // Array of pointers to page tables.
+    uint32_t tables_phys[1024]; // Array of physical page location for CR3.
+    uint32_t phys_address;      // Physical address og table_phys.
+} page_directory_t;
+
 #endif

@@ -3,8 +3,8 @@
 
 #include <Kernel/Utils/ordered_array.h>
 #include <Kernel/Memory/frame.h>
-#include <Kernel/CPU/system.h>
 #include <Kernel/Memory/kmem.h>
+#include <Kernel/CPU/system.h>
 
 #include <stdbool.h>
 #include <stdint.h>

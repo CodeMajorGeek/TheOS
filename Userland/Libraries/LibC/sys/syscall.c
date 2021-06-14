@@ -11,7 +11,6 @@ int $sys$putc(int ic)
 {
     char c = (char) ic;
     return syscall(0, (uint32_t) &c, 0, 0, 0, 0);
-    return ic;
 }
 
 int $sys$puts(const char* str)
@@ -19,6 +18,11 @@ int $sys$puts(const char* str)
     return syscall(0, (uint32_t) str, 0, 0, 0, 0);
 }
 
-int $sys$fork(void) {
+int $sys$getc(void)
+{
     return syscall(1, 0, 0, 0, 0, 0);
+}
+
+int $sys$fork(void) {
+    return syscall(2, 0, 0, 0, 0, 0);
 }

@@ -26,5 +26,5 @@ uint8_t keyboard_wait_scancode(void)
 
 char keyboard_wait_ASCII(void)
 {
-
+    return 0;
 }

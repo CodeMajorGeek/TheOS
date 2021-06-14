@@ -3,6 +3,7 @@
 void* SYSCALLS[MAX_SYSCALLS] = 
 {
     &puts,
+    &getc,
     &task_fork
 };
 

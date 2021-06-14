@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-#define MAX_SYSCALLS 2
+#define MAX_SYSCALLS 3
 
 void syscall_handler(registers_t*);
 

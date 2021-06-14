@@ -1,6 +1,6 @@
 {
     "env": {
-        "includePaths":[
+        "includePaths": [
             "${workspaceFolder}/Includes/",
             "${workspaceFolder}/Includes/LibC/"
         ]
@@ -9,14 +9,26 @@
         {
             "name": "TheOS",
             "intelliSenseMode": "gcc-x86",
-            "includePath": [ "${includePaths}" ],
+            "includePath": [
+                "${includePaths}"
+            ],
             "cStandard": "c11",
             "browse": {
-                "path": ["${workspaceFolder}"],
+                "path": [
+                    "${workspaceFolder}"
+                ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             }
-
+        },
+        {
+            "name": "AVR",
+            "intelliSenseMode": "${default}",
+            "cStandard": "c11",
+            "cppStandard": "c++14",
+            "compilerPath": "",
+            "includePath": [],
+            "compilerArgs": []
         }
     ],
     "version": 4

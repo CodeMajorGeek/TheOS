@@ -30,6 +30,9 @@
         "serial.h": "c",
         "keyboard.h": "c",
         "elf.h": "c",
-        "*.inc": "c"
+        "*.inc": "c",
+        "ide.h": "c",
+        "*.tcc": "c",
+        "rope": "c"
     }
 }

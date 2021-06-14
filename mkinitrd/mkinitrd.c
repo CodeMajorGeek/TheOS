@@ -16,7 +16,7 @@ int main(char argc, char** argv)
     uint32_t nheaders = (argc - 1) / 2;
     initrd_header_t headers[64];
 
-    printf("Size of header: %d.\n", sizeof(initrd_header_t));
+    printf("Size of header: %ld.\n", sizeof(initrd_header_t));
 
     uint32_t off = sizeof(initrd_header_t) * 64 + sizeof(int);
     for (int i = 0; i < nheaders; i++)

@@ -1,7 +1,6 @@
 #ifndef _KERNEL_IDE_H
 #define _KERNEL_IDE_H
 
-#include <Kernel/Memory/kmem.h>
 #include <Kernel/CPU/timer.h>
 #include <Kernel/CPU/io.h>
 
@@ -44,13 +43,11 @@
 #define ATA_ER_TK0NF       0x02    // Track 0 not found
 #define ATA_ER_AMNF        0x01    // No address mark
 
-// Channels:
-#define      ATA_PRIMARY   0x00
-#define      ATA_SECONDARY 0x01
+#define ATA_PRIMARY        0x00
+#define ATA_SECONDARY       0x01
  
-// Directions:
-#define      ATA_READ      0x00
-#define      ATA_WRITE     0x01
+#define ATA_READ           0x00
+#define ATA_WRITE          0x01
 
 #define IDE_ATA            0x00
 #define IDE_ATAPI          0x01
@@ -84,6 +81,9 @@
 #define ATA_IDENT_COMMANDSETS    164
 #define ATA_IDENT_MAX_LBA_EXT    200
 
+#define ATAPI_CMD_READ           0xA8
+#define ATAPI_CMD_EJECT          0x1B
+
 typedef struct {
    uint16_t base;  // I/O Base.
    uint16_t ctrl;  // Control Base
@@ -110,6 +110,13 @@ uint8_t ide_polling(uint8_t, uint32_t);
 uint8_t ide_print_error(uint32_t, uint8_t);
 void ide_initialize(uint32_t, uint32_t, uint32_t, uint32_t, uint32_t);
 
-uint8_t ide_ata_access(bool, uint8_t, uint32_t, uint8_t, uint16_t, uint32_t);
+uint8_t ide_ata_access(uint8_t, uint8_t, uint32_t, uint8_t, uint16_t, uint32_t);
+void ide_read_sectors(uint8_t, uint8_t, uint32_t, uint16_t, uint32_t);
+void ide_write_sectors(uint8_t, uint8_t, uint32_t, uint16_t, uint32_t);
+
+void ide_wait_irq(void);
+uint8_t ide_atapi_read(uint8_t, uint32_t, uint8_t, uint16_t, uint32_t);
+
+void ide_atapi_eject(uint8_t);
 
 #endif

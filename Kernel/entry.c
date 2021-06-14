@@ -19,7 +19,11 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdio.h>
+
+extern uint32_t start;
+extern uint32_t end;
 
 int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
 {
@@ -56,6 +60,9 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     puts("================================================================================");
     puts("Before going to user-mode, let's test VFS:\n");
 
+    uint32_t iso_offset;
+    uint32_t iso_len;
+
     dirent_t* node = 0;
     int i = 0;
     while ((node = readdir_fs(fs_root, i++)) != 0)
@@ -70,6 +77,9 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
             uint8_t* offset;
             uint32_t s = read_fs(fsnode, 0, fsnode->length, offset);
             printf("Loaded at offset: 0x%H\n", offset);
+
+            iso_offset = (uint32_t) offset;
+            iso_len = fsnode->length;
         }
     }
 
@@ -90,6 +100,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     switch_to_user_mode();
     
     $sys$puts("In user-mode with syscalls !!!\n");
-    
-    for (;;);
+
+    for (;;)
+        __asm__("nop");
 }

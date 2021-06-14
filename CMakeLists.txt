@@ -69,6 +69,13 @@ add_custom_target(setup-run
     USES_TERMINAL
 )
 
+add_custom_target(install-run
+    COMMAND ${CMAKE_MAKE_PROGRAM} install
+    COMMAND ${CMAKE_MAKE_PROGRAM} iso
+    COMMAND ${CMAKE_MAKE_PROGRAM} run
+    USES_TERMINAL
+)
+
 include_directories(.)
 include_directories(${CMAKE_BINARY_DIR})
 

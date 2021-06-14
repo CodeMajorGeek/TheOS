@@ -21,9 +21,8 @@
 #define DECIMAL     10
 #define HEXADECIMAL 16
 
-char read(void);
-
 int putc(int);
+int getc(void);
 
 int printf(const char* __restrict, ...);
 int puts(const char*);

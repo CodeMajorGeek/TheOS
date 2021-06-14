@@ -1,10 +1,11 @@
 #ifndef _KERNEL_TASK_H
 #define _KERNEL_TASK_H
 
-#include <Kernel/CPU/tss.h>
-#include <Kernel/Memory/page.h>
 #include <Kernel/Memory/frame.h>
 #include <Kernel/Utils/logger.h>
+#include <Kernel/Memory/kmem.h>
+#include <Kernel/Memory/page.h>
+#include <Kernel/CPU/tss.h>
 
 #include <stdint.h>
 #include <string.h>
