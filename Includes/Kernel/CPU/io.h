@@ -10,7 +10,7 @@ uint32_t io_inl(uint16_t);
 
 void io_outsw(uint32_t, uint32_t, uint32_t);
 
-void io_insl(uint32_t, uint32_t, uint32_t);
+void io_insl(uint32_t, uint32_t*, uint32_t);
 void io_insw(uint32_t, uint32_t, uint32_t);
 
 #endif

@@ -24,7 +24,7 @@ void io_outsw(uint32_t port, uint32_t buffer, uint32_t count)
 	__asm__ __volatile__ ("cld; rep; outsw" :: "D" (buffer), "d" (port), "c" (count));
 }
 
-void io_insl(uint32_t port, uint32_t buffer, uint32_t count)
+void io_insl(uint32_t port, uint32_t* buffer, uint32_t count)
 {
 	__asm__ __volatile__ ("cld; rep; insl" :: "D" (buffer), "d" (port), "c" (count));
 }

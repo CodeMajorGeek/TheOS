@@ -24,10 +24,6 @@ multiboot_header:
 .long stack_top
 .long _end
 .long multiboot_entry
-.long 0
-.long 1024
-.long 768
-.long 32
 
 .section .bss
 .align 16

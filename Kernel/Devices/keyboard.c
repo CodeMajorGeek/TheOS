@@ -20,22 +20,22 @@ static void keyboard_callback(registers_t* regs)
             case 0x2A:
             case 0x36:
                 is_shifting = TRUE;
-                return;
+                break;
             case 0xAA:
             case 0xB6:
                 is_shifting = FALSE;
-                return;
+                break;
             case 0x3A:
                 is_caplocked = !is_caplocked;
-                return;
+                break;
             case 0x45:
                 is_vernum = !is_vernum;
-                return;
+                break;
             default:
-                goto no_changing_state; // Ugly but avoid updating LEDs when useless...
+                goto no_changing_state; // Ugly but avoid updating LEDs when not needed...
         }
         keyboard_update_leds((is_vernum << 1) | (is_caplocked << 2));
-
+        return;
 no_changing_state:
         if (scancode_buffer_length == SCANCODE_BUFFER_SIZE) // The scancode buffer is full.
             return;
@@ -50,13 +50,13 @@ no_changing_state:
 
 void keyboard_wait_ack(void)
 {
-    while (!(io_inb(PORT_DATA) == 0xFA))
+    while (!(io_inb(PORT_DATA) == PS2_ACK))
         __asm__("nop");
 }
 
 void keyboard_update_leds(uint8_t status)
 {
-    io_outb(PORT_DATA, 0xED);
+    io_outb(PORT_DATA, KEYBOARD_LEDS);
     keyboard_wait_ack();
     io_outb(PORT_DATA, status);
 }

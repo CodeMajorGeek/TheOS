@@ -10,6 +10,10 @@
 #define PORT_STATUS             0x64
 #define PORT_DATA               0x60
 
+#define KEYBOARD_LEDS           0xED
+
+#define PS2_ACK                 0xFA
+
 #define SCANCODE_BUFFER_SIZE    8
 
 void keyboard_wait_ack(void);
