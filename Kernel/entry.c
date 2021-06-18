@@ -90,7 +90,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
 
     puts("\nWelcome to TheOS !\n");
 
-    /*
+    
     printf("Type a string: ");
     for(;;)
     {  
@@ -100,7 +100,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
 
         putc(c);
     }
-    */
+    
 
     klog(INFO, "Entering in user-mode...");
     switch_to_user_mode();

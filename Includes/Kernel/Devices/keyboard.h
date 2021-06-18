@@ -17,5 +17,6 @@ void keyboard_update_leds(uint8_t);
 void keyboard_init(void);
 
 uint8_t keyboard_get_scancode(void);
+bool keyboard_is_uppercase(void);
 
 #endif

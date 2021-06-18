@@ -15,8 +15,6 @@ static void keyboard_callback(registers_t* regs)
     if (status & 0x01)
     {
         uint8_t scancode = io_inb(PORT_DATA);
-        printf("Scancode: 0x%H.\n", scancode);
-
         switch (scancode)
         {
             case 0x2A:
@@ -80,4 +78,9 @@ uint8_t keyboard_get_scancode(void)
         read_pos = 0;
 
     return sc;
+}
+
+bool keyboard_is_uppercase(void)
+{
+    return is_shifting || is_caplocked;
 }

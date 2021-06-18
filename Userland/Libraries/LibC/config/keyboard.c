@@ -12,7 +12,17 @@ const char keycodes[] =
 
 char scancode_to_ASCII(uint8_t sc)
 {
+    char ret = NULL;
     if (sc < sizeof(keycodes))
-        return keycodes[sc];
-    return NULL;
+        ret = keycodes[sc];
+
+    if (keyboard_is_uppercase()) // Make CAPLOCK & shift work :) (TODO: maybe move this stuff to kernel keyboard codes...).
+        if (ret >= 'a' && ret <= 'z')
+            ret -= 32;
+        else if (sc >= 2 && sc <= 10)
+            ret = '1' + (sc - 2);
+        else if (sc == 11)
+            ret = '0';
+
+    return ret;
 }
