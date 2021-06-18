@@ -92,7 +92,7 @@ void tty_enable_cursor(bool enabled)
 
 void tty_update_cursor(uint8_t x, uint8_t y)
 {
-    uint16_t pos = y * VGA_WIDTH + x;
+    uint16_t pos = (y + 1) * VGA_WIDTH + x;
 
     io_outb(CURSOR_CTRL, 0x0F);
     io_outb(CURSOR_DATA, (uint8_t) (pos & 0xFF));

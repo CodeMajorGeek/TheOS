@@ -36,6 +36,8 @@ set(LIBC_SOURCES
     ../Userland/Libraries/LibC/stdio.c
     ../Userland/Libraries/LibC/string.c
     ../Userland/Libraries/LibC/sys/syscall.c
+    ../Userland/Libraries/LibC/unistd.c
+    ../Userland/Libraries/LibC/config/keyboard.c
 )
 
 set(SOURCES

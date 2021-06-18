@@ -48,7 +48,7 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     klog(INFO, "Initializing initrd...");
     uint32_t initrd_location = *((uint32_t*) mbi->mods_addr);
     uint32_t initrd_end = *(uint32_t*)(mbi->mods_addr + 4);
-    kmem_addr = initrd_end; // Put memory managment after initrtd to prevent overwrite it.
+    kmem_addr = initrd_end; // Stop memory managment area before inirtd to avoid overrire it.
 
     kmem_init(mbi);
     page_init();
@@ -59,9 +59,6 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
     
     puts("================================================================================");
     puts("Before going to user-mode, let's test VFS:\n");
-
-    uint32_t iso_offset;
-    uint32_t iso_len;
 
     dirent_t* node = 0;
     int i = 0;
@@ -77,9 +74,6 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
             uint8_t* offset;
             uint32_t s = read_fs(fsnode, 0, fsnode->length, offset);
             printf("Loaded at offset: 0x%H\n", offset);
-
-            iso_offset = (uint32_t) offset;
-            iso_len = fsnode->length;
         }
     }
 
@@ -96,11 +90,23 @@ int k_entry(uint32_t magic, uint32_t addr, uint32_t stack)
 
     puts("\nWelcome to TheOS !\n");
 
+    /*
+    printf("Type a string: ");
+    for(;;)
+    {  
+        int c = NULL;
+        while (!c)
+            c = getc();
+
+        putc(c);
+    }
+    */
+
     klog(INFO, "Entering in user-mode...");
     switch_to_user_mode();
     
     $sys$puts("In user-mode with syscalls !!!\n");
-
+    
     for (;;)
         __asm__("nop");
 }

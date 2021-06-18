@@ -33,6 +33,7 @@
         "*.inc": "c",
         "ide.h": "c",
         "*.tcc": "c",
-        "rope": "c"
+        "rope": "c",
+        "*.def": "c"
     }
 }

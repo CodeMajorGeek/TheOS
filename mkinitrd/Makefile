@@ -11,4 +11,4 @@ mkinitrd: mkinitrd.c
 	chmod +x $@
 
 initrd: mkinitrd
-	./$< TheOS.iso TheOS.iso
+	./$< text.txt text.txt

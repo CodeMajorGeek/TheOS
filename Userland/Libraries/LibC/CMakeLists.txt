@@ -1,8 +1,10 @@
 set(LIBC_SOURCES
     sys/syscall.c
+    config/keyboard.c
     stdio.c
     stdlib.c
     string.c
+    unistd.c
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DTHEOS_LIBC_BUILD")

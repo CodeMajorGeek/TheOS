@@ -9,11 +9,12 @@
 #endif
 
 #include <limits.h>
-#include <stdbool.h>
 #include <stdint.h>
 #include <stddef.h>
 #include <stdarg.h>
 #include <string.h>
+#include <stdbool.h>
+#include <config/keyboard.h>
 
 #define EOF (-1)
 

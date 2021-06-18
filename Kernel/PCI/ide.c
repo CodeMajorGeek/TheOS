@@ -7,10 +7,9 @@ uint8_t ide_buf[2048] = { 0 };
 static uint8_t ide_irq_invoked = 0;
 static uint8_t atapi_packet[12] = { 0xA8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-static void ide_irq(void)
+static void ide_irq(registers_t* regs)
 {
     ide_irq_invoked = 1;
-    puts("IDE IRQ fired !");
 }
 
 void ide_write(uint8_t channel, uint8_t reg, uint8_t data)

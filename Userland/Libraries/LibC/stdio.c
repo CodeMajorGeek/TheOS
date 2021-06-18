@@ -6,7 +6,7 @@ int putc(int ic)
 #ifdef __THEOS_KERNEL
     tty_write(&c, sizeof(c));
 #else
-    syscall(0, (uint32_t) &c, 0, 0, 0, 0);
+    $sys$putc(c);
 #endif
     return ic;
 }
@@ -27,11 +27,12 @@ static bool print(const char* data, size_t length, bool uppercase)
 int getc(void)
 {
 #ifdef __THEOS_KERNEL
-    return keyboard_wait_ASCII();
+    return (int) scancode_to_ASCII((uint8_t) keyboard_get_scancode());
 #else
     return $sys$getc();
 #endif
 }
+
 
 int printf(const char* restrict format, ...)
 {
